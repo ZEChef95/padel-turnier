@@ -1033,12 +1033,38 @@ function renderSchedule() {
 function previewScore(matchId) {}
 
 function saveScore(matchId, t1, t2) {
-  const s1 = parseInt(document.getElementById('s1_' + matchId)?.value);
-  const s2 = parseInt(document.getElementById('s2_' + matchId)?.value);
-  if (isNaN(s1) || isNaN(s2)) { showToast('Bitte gültige Spielstände eingeben!'); return; }
-  if (s1 === s2) { showToast('Kein Unentschieden möglich — bitte korrekten Stand eingeben!'); return; }
-  if (s1 < 0 || s2 < 0 || s1 > 7 || s2 > 7) { showToast('Spielstand muss zwischen 0 und 7 liegen!'); return; }
-  results[matchId] = { score1: s1, score2: s2, winner: s1 > s2 ? t1 : t2 };
+  let s1 = parseInt(document.getElementById('s1_' + matchId)?.value);
+  let s2 = parseInt(document.getElementById('s2_' + matchId)?.value);
+
+  if (isNaN(s1) && isNaN(s2)) {
+    showToast('Bitte mindestens einen Spielstand eingeben!');
+    return;
+  }
+
+  // Wenn nur s1 eingegeben wurde → s2 = 0
+  if (!isNaN(s1) && isNaN(s2)) s2 = 0;
+
+  // Wenn nur s2 eingegeben wurde → s1 = 0
+  if (!isNaN(s2) && isNaN(s1)) s1 = 0;
+
+  if (s1 === s2) {
+    showToast('Kein Unentschieden möglich!');
+    return;
+  }
+
+  if (s1 < 0 || s2 < 0 || s1 > 6 || s2 > 6) {
+    showToast('Spielstand muss zwischen 0 und 6 liegen!');
+    return;
+  }
+
+  const winner = s1 > s2 ? t1 : t2;
+
+  results[matchId] = {
+    score1: s1,
+    score2: s2,
+    winner
+  };
+
   renderAll();
   showToast('Ergebnis gespeichert! ✓');
 }
