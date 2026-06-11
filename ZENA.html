@@ -1005,9 +1005,9 @@ function renderSchedule() {
         const s1 = r ? r.score1 : '';
         const s2 = r ? r.score2 : '';
         html += `<div class="match-result">
-          <input class="score-input" type="number" min="0" max="7" value="${s1}" placeholder="0" id="s1_${m.id}" onchange="previewScore('${m.id}')">
+          <input class="score-input" type="number" min="0" max="6" value="${s1}" placeholder="0" id="s1_${m.id}" onchange="previewScore('${m.id}')">
           <div class="score-sep">:</div>
-          <input class="score-input" type="number" min="0" max="7" value="${s2}" placeholder="0" id="s2_${m.id}" onchange="previewScore('${m.id}')">
+          <input class="score-input" type="number" min="0" max="6" value="${s2}" placeholder="0" id="s2_${m.id}" onchange="previewScore('${m.id}')">
           <button class="btn btn-green save-match-btn" onclick="saveScore('${m.id}', ${m.team1}, ${m.team2})">✓</button>
         </div>`;
         if (r) html += `<div class="match-winner-badge">🏆 ${getTeamName(winner)}</div>`;
