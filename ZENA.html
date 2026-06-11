@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Padel-Turnier Ausstand ZENA</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1a9c5b;
+    --green-dark: #0f6b3e;
+    --green-light: #d4f5e3;
+    --green-mid: #2ec97a;
+    --court: #1a9c5b;
+    --black: #0d0d0d;
+    --white: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-200: #e8e8e8;
+    --gray-400: #9a9a9a;
+    --gray-600: #555;
+    --gold: #e8b923;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.10);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, #0a2a18 0%, #0d3d22 50%, #0a2a18 100%);
+    padding: 0;
+    overflow: hidden;
+  }
+  .hero-court-lines {
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    background-image:
+      linear-gradient(to right, #fff 1px, transparent 1px),
+      linear-gradient(to bottom, #fff 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-arc {
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140%;
+    height: 200px;
+    background: var(--black);
+    border-radius: 50% 50% 0 0;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 60px 20px 120px;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 110px);
+    letter-spacing: 2px;
+    line-height: 0.95;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .hero-title span { color: var(--green-mid); }
+  .hero-subtitle {
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .hero-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+  }
+  .hero-date-sep { width: 4px; height: 4px; border-radius: 50%; background: var(--green-mid); }
+
+  /* SECTION */
+  section { padding: 64px 20px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+    color: var(--white);
+  }
+
+  /* STORY SECTION */
+  .story-section { background: #111; }
+  .story-card {
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 32px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .story-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--green-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 22px;
+  }
+  .story-text { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.7); }
+  .story-text strong { color: var(--green-mid); font-weight: 600; }
+
+  /* PLAYER REGISTRATION */
+  .reg-section { background: var(--black); }
+  .player-input-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .player-input-row input {
+    flex: 1;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    padding: 12px 16px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .player-input-row input:focus { border-color: var(--green-mid); }
+  .player-input-row input::placeholder { color: rgba(255,255,255,0.3); }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s;
+  }
+  .btn-green { background: var(--green); color: #fff; }
+  .btn-green:hover { background: var(--green-dark); }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7);
+  }
+  .btn-outline:hover { border-color: var(--green-mid); color: var(--green-mid); }
+  .btn-gold { background: var(--gold); color: #111; }
+  .btn-gold:hover { background: #d4a91e; }
+  .btn-danger { background: #c0392b; color: #fff; }
+  .btn-danger:hover { background: #a93226; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .players-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0;
+    min-height: 44px;
+  }
+  .player-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+  .player-chip button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.15s;
+  }
+  .player-chip button:hover { color: #e74c3c; }
+  .player-count {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+  }
+  .player-count span { color: var(--green-mid); font-weight: 600; }
+
+  /* TEAMS */
+  .teams-section { background: #0d0d0d; }
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .team-card {
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .team-card:hover { border-color: rgba(46,201,122,0.3); }
+  .team-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--green-mid);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .team-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--green-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff;
+    font-family: 'Inter', sans-serif;
+  }
+  .team-players { list-style: none; }
+  .team-players li {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .team-players li:last-child { border-bottom: none; }
+  .team-players li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+
+  /* TABLE */
+  .table-section { background: #111; }
+  .standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .standings-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .standings-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.8);
+  }
+  .standings-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .standing-pos {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    font-family: 'Inter', sans-serif;
+  }
+  .pos-1 { background: var(--gold); color: #111; }
+  .pos-2 { background: #b0b8c3; color: #111; }
+  .pos-3 { background: #cd7f32; color: #fff; }
+  .pos-other { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  .team-name-cell { font-weight: 600; color: #fff; }
+  .pts-cell { font-weight: 700; color: var(--green-mid); font-size: 16px; }
+
+  /* SCHEDULE */
+  .schedule-section { background: var(--black); }
+  .round-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin: 28px 0 12px;
+  }
+  .match-card {
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .match-court {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    min-width: 60px;
+  }
+  .match-teams {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 200px;
+  }
+  .match-team {
+    font-weight: 600;
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+    flex: 1;
+    text-align: center;
+  }
+  .match-vs {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 2px;
+  }
+  .match-result {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .score-input {
+    width: 56px;
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    padding: 8px 4px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .score-input:focus { border-color: var(--green-mid); }
+  .score-sep { font-size: 20px; font-weight: 700; color: rgba(255,255,255,0.2); }
+  .match-saved {
+    font-size: 12px;
+    color: var(--green-mid);
+    font-weight: 500;
+  }
+  .save-match-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  .match-winner-badge {
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--green-dark);
+    color: var(--green-mid);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .ko-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .ko-halbfinale { background: #1a2a4a; color: #6ea8fe; }
+  .ko-finale { background: #2a1a0a; color: var(--gold); }
+
+  /* SCORING EXPLANATION */
+  .rules-section { background: #0d0d0d; }
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .rule-card {
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+  }
+  .rule-icon { font-size: 28px; margin-bottom: 10px; }
+  .rule-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+  .rule-value { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: var(--green-mid); }
+  .score-seq {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
+  .score-ball {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17px;
+    color: rgba(255,255,255,0.7);
+  }
+  .score-ball.active { background: var(--green-dark); border-color: var(--green); color: var(--green-mid); }
+  .score-arrow { color: rgba(255,255,255,0.2); font-size: 14px; }
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    margin-top: 32px;
+  }
+  .video-wrapper iframe {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* LOCATION */
+  .location-section { background: #111; }
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media(max-width: 640px) { .location-grid { grid-template-columns: 1fr; } }
+  .location-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .location-detail {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .location-detail-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--green-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .location-detail-text { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+  .location-detail-text strong { display: block; font-weight: 600; color: #fff; font-size: 15px; margin-bottom: 2px; }
+  .map-embed {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    height: 280px;
+  }
+  .map-embed iframe { width: 100%; height: 100%; border: none; }
+
+  /* FOOTER */
+  footer {
+    background: #0a0a0a;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 32px 20px;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.25);
+  }
+  footer span { color: var(--green-mid); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--green-dark);
+    border: 1px solid var(--green);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0; }
+
+  /* PHASE BADGE */
+  #phase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a2a1a;
+    border: 1px solid rgba(46,201,122,0.2);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--green-mid);
+    margin-bottom: 24px;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green-mid);
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-court-lines"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">⚡ Ausstand-Turnier · Tomaselli Gabriel</div>
+    <h1 class="hero-title">Padel<br><span>Ausstand</span><br>ZENA</h1>
+    <p class="hero-subtitle">Farewell — Nathanael Zech</p>
+    <div class="hero-date">
+      <span>📅 25. Juli 2026</span>
+      <div class="hero-date-sep"></div>
+      <span>🕕 18:00 – 20:00 Uhr</span>
+      <div class="hero-date-sep"></div>
+      <span>📍 PADELZONE Götzis</span>
+    </div>
+  </div>
+  <div class="hero-arc"></div>
+</div>
+
+<!-- STORY -->
+<section class="story-section">
+  <div class="container">
+    <div class="story-card">
+      <div class="story-icon">🎾</div>
+      <div class="story-text">
+        <strong>Nathanael Zech</strong> verlässt Tomaselli Gabriel — und das wird gefeiert wie es sich gehört: mit einem exklusiven Padel-Turnier für auserwählte Kolleginnen und Kollegen. Zwei Courts, spannende Matches, goldener Siegerpokal und jede Menge unvergessliche Momente. <strong>Willkommen beim Padel-Turnier Ausstand ZENA!</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PLAYER REGISTRATION -->
+<section class="reg-section" id="section-register">
+  <div class="container">
+    <div class="section-label">Schritt 1</div>
+    <h2 class="section-title">Spieler eintragen</h2>
+    <div class="player-input-row">
+      <input type="text" id="player-input" placeholder="Vorname eingeben..." maxlength="30" autocomplete="off">
+      <button class="btn btn-green" onclick="addPlayer()">+ Hinzufügen</button>
+    </div>
+    <p class="player-count">Spieler: <span id="player-count">0</span> / 12 &nbsp;·&nbsp; Min. 8 für Turnierstart</p>
+    <div class="players-grid" id="players-grid"></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+      <button class="btn btn-gold" id="generate-btn" onclick="generateTeams()" disabled>🎲 Teams generieren</button>
+      <button class="btn btn-outline" onclick="resetAll()">↺ Alles zurücksetzen</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAMS -->
+<section class="teams-section hidden" id="section-teams">
+  <div class="container">
+    <div class="section-label">Schritt 2</div>
+    <h2 class="section-title">Zufällige Teams</h2>
+    <div class="teams-grid" id="teams-grid"></div>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+      <button class="btn btn-green" onclick="startTournament()">🏆 Turnier starten & Spielplan generieren</button>
+      <button class="btn btn-outline" onclick="generateTeams()">🎲 Neu auslosen</button>
+    </div>
+  </div>
+</section>
+
+<div class="divider" id="div-schedule" style="display:none;"></div>
+
+<!-- LIVE TABLE -->
+<section class="table-section hidden" id="section-table">
+  <div class="container">
+    <div id="phase-badge"><div class="pulse-dot"></div><span id="phase-text">Gruppenphase läuft</span></div>
+    <div class="section-label">Live</div>
+    <h2 class="section-title">Tabelle</h2>
+    <table class="standings-table" id="standings-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Team</th>
+          <th>Sp</th>
+          <th>S</th>
+          <th>N</th>
+          <th>Pts</th>
+        </tr>
+      </thead>
+      <tbody id="standings-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider" id="div-schedule2" style="display:none;"></div>
+
+<!-- SCHEDULE -->
+<section class="schedule-section hidden" id="section-schedule">
+  <div class="container">
+    <div class="section-label">Schritt 3</div>
+    <h2 class="section-title">Spielplan</h2>
+    <div id="schedule-container"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RULES & SCORING -->
+<section class="rules-section">
+  <div class="container">
+    <div class="section-label">Regeln</div>
+    <h2 class="section-title">So wird gespielt</h2>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-icon">🏆</div>
+        <div class="rule-title">Sieg</div>
+        <div class="rule-value">+2 Punkte</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">❌</div>
+        <div class="rule-title">Niederlage</div>
+        <div class="rule-value">0 Punkte</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">🎯</div>
+        <div class="rule-title">Sätze pro Spiel</div>
+        <div class="rule-value">1 Satz</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">🏅</div>
+        <div class="rule-title">Games zum Sieg</div>
+        <div class="rule-value">6 Games</div>
+      </div>
+    </div>
+    <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:24px;">
+      <h3 style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Punktzählung pro Game</h3>
+      <div class="score-seq">
+        <div class="score-ball">0</div>
+        <div class="score-arrow">→</div>
+        <div class="score-ball">15</div>
+        <div class="score-arrow">→</div>
+        <div class="score-ball">30</div>
+        <div class="score-arrow">→</div>
+        <div class="score-ball">40</div>
+        <div class="score-arrow">→</div>
+        <div class="score-ball active">GAME</div>
+      </div>
+      <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+        Bei <strong style="color:var(--green-mid);">40:40 (Einstand)</strong> wird mit <strong style="color:var(--green-mid);">Golden Point</strong> gespielt — der nächste Punkt entscheidet das Game. Kein Advantage, kein Deuce. Gespielt wird bis 6 Games (1 Satz). Jeder Satz wird gewonnen und das Spiel ist entschieden.
+      </p>
+      <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+        <strong style="color:#fff;">Modus:</strong> Jeder gegen jeden (Gruppenphase) → Halbfinale: 1. vs. 4. und 2. vs. 3. → Finale. Die zwei besten aus der Gruppe qualifizieren sich auf direktem Weg ins Finale — Plätze 3 und 4 spielen das zweite Halbfinale.
+      </p>
+    </div>
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/1nYGozBGSgY" title="Padel Regeln Erklärung" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LOCATION -->
+<section class="location-section">
+  <div class="container">
+    <div class="section-label">Wo & Wann</div>
+    <h2 class="section-title">Spielort</h2>
+    <div class="location-grid">
+      <div class="location-info">
+        <div class="location-detail">
+          <div class="location-detail-icon">🏟️</div>
+          <div class="location-detail-text">
+            <strong>PADEL Götzis – PADELZONE</strong>
+            Indoor Sportzentrum Götzis
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📍</div>
+          <div class="location-detail-text">
+            <strong>Adresse</strong>
+            Mösleweg 23<br>6840 Götzis, Vorarlberg
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">📅</div>
+          <div class="location-detail-text">
+            <strong>Datum</strong>
+            Samstag, 25. Juli 2026
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">🕕</div>
+          <div class="location-detail-text">
+            <strong>Uhrzeit</strong>
+            18:00 – 20:00 Uhr
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">🎾</div>
+          <div class="location-detail-text">
+            <strong>Courts</strong>
+            2 Indoor Padel Courts
+          </div>
+        </div>
+        <a href="https://www.google.com/maps/place/M%C3%B6sleweg+23,+6840+G%C3%B6tzis" target="_blank" class="btn btn-green" style="margin-top:4px;text-decoration:none;">
+          📌 In Google Maps öffnen
+        </a>
+      </div>
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2691.5!2d9.6355!3d47.3333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479b3f86588eaa01%3A0xd74078e831a57c21!2sM%C3%B6sleweg%2023%2C%206840%20G%C3%B6tzis!5e0!3m2!1sde!2sat!4v1700000000000"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Padel-Turnier Ausstand ZENA · <span>25. Juli 2026</span> · PADELZONE Götzis · Farewell <span>Nathanael Zech</span> 🎾</p>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+let players = [];
+let teams = [];
+let matches = [];
+let results = {};
+let tournamentStarted = false;
+
+const teamColors = ['🟢','🔵','🟡','🟠','🔴','🟣'];
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function addPlayer() {
+  const input = document.getElementById('player-input');
+  const name = input.value.trim();
+  if (!name) return;
+  if (players.length >= 12) { showToast('Maximum 12 Spieler erreicht!'); return; }
+  if (players.includes(name)) { showToast(name + ' ist bereits eingetragen!'); return; }
+  players.push(name);
+  input.value = '';
+  renderPlayers();
+  input.focus();
+}
+
+document.getElementById('player-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addPlayer();
+});
+
+function removePlayer(idx) {
+  if (tournamentStarted) return;
+  players.splice(idx, 1);
+  renderPlayers();
+}
+
+function renderPlayers() {
+  const grid = document.getElementById('players-grid');
+  const count = document.getElementById('player-count');
+  count.textContent = players.length;
+  grid.innerHTML = players.map((p, i) =>
+    `<div class="player-chip">${p}<button onclick="removePlayer(${i})" title="Entfernen">✕</button></div>`
+  ).join('');
+  document.getElementById('generate-btn').disabled = players.length < 8;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function generateTeams() {
+  if (players.length < 8) { showToast('Mindestens 8 Spieler erforderlich!'); return; }
+  const shuffled = shuffle(players);
+  const numTeams = Math.round(shuffled.length / 2);
+  teams = [];
+  for (let i = 0; i < numTeams; i++) {
+    teams.push({ name: 'Team ' + (i + 1), players: [], color: teamColors[i] });
+  }
+  shuffled.forEach((p, i) => teams[i % numTeams].players.push(p));
+
+  const grid = document.getElementById('teams-grid');
+  grid.innerHTML = teams.map((t, i) => `
+    <div class="team-card">
+      <div class="team-name"><div class="team-num">${i+1}</div>${t.color} ${t.name}</div>
+      <ul class="team-players">${t.players.map(p => `<li>${p}</li>`).join('')}</ul>
+    </div>
+  `).join('');
+
+  document.getElementById('section-teams').classList.remove('hidden');
+  document.getElementById('section-teams').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showToast('Teams ausgelost! 🎲');
+}
+
+function startTournament() {
+  if (teams.length < 4) { showToast('Mindestens 4 Teams nötig!'); return; }
+  tournamentStarted = true;
+  matches = [];
+  results = {};
+  generateRoundRobin();
+  renderAll();
+  document.getElementById('div-schedule').style.display = '';
+  document.getElementById('div-schedule2').style.display = '';
+  document.getElementById('section-table').classList.remove('hidden');
+  document.getElementById('section-schedule').classList.remove('hidden');
+  document.getElementById('section-table').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showToast('Turnier gestartet! Viel Spaß 🏆');
+}
+
+function generateRoundRobin() {
+  const courts = [1, 2];
+  let courtIdx = 0;
+  for (let i = 0; i < teams.length; i++) {
+    for (let j = i + 1; j < teams.length; j++) {
+      const id = `g_${i}_${j}`;
+      matches.push({ id, team1: i, team2: j, court: courts[courtIdx % 2], phase: 'Gruppenphase', round: null });
+      courtIdx++;
+    }
+  }
+  // KO placeholders
+  matches.push({ id: 'hf1', team1: null, team2: null, court: 1, phase: 'Halbfinale', round: 'Halbfinale 1 (1. vs 4.)', ko: true });
+  matches.push({ id: 'hf2', team1: null, team2: null, court: 2, phase: 'Halbfinale', round: 'Halbfinale 2 (2. vs 3.)', ko: true });
+  matches.push({ id: 'final', team1: null, team2: null, court: 1, phase: 'Finale', round: 'FINALE 🏆', ko: true });
+}
+
+function getStandings() {
+  const table = teams.map((t, i) => ({ idx: i, name: t.name, color: t.color, played: 0, won: 0, lost: 0, pts: 0 }));
+  matches.filter(m => !m.ko).forEach(m => {
+    const r = results[m.id];
+    if (!r) return;
+    table[m.team1].played++;
+    table[m.team2].played++;
+    if (r.winner === m.team1) { table[m.team1].won++; table[m.team1].pts += 2; table[m.team2].lost++; }
+    else if (r.winner === m.team2) { table[m.team2].won++; table[m.team2].pts += 2; table[m.team1].lost++; }
+  });
+  return table.sort((a, b) => b.pts - a.pts || b.won - a.won);
+}
+
+function renderStandings() {
+  const standings = getStandings();
+  const body = document.getElementById('standings-body');
+  body.innerHTML = standings.map((t, i) => {
+    const posClass = i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : 'pos-other';
+    return `<tr>
+      <td><div class="standing-pos ${posClass}">${i+1}</div></td>
+      <td><span class="team-name-cell">${t.color} ${t.name}</span></td>
+      <td>${t.played}</td>
+      <td>${t.won}</td>
+      <td>${t.lost}</td>
+      <td class="pts-cell">${t.pts}</td>
+    </tr>`;
+  }).join('');
+  return standings;
+}
+
+function allGroupMatchesDone() {
+  return matches.filter(m => !m.ko).every(m => results[m.id]);
+}
+
+function updateKOMatches() {
+  if (!allGroupMatchesDone()) return;
+  const standings = getStandings();
+  const hf1 = matches.find(m => m.id === 'hf1');
+  const hf2 = matches.find(m => m.id === 'hf2');
+  hf1.team1 = standings[0].idx;
+  hf1.team2 = standings[3] ? standings[3].idx : standings[standings.length-1].idx;
+  hf2.team1 = standings[1].idx;
+  hf2.team2 = standings[2] ? standings[2].idx : standings[standings.length-1].idx;
+
+  // Update final from HF results
+  const hf1r = results['hf1'];
+  const hf2r = results['hf2'];
+  const fin = matches.find(m => m.id === 'final');
+  if (hf1r && hf2r) {
+    fin.team1 = hf1r.winner;
+    fin.team2 = hf2r.winner;
+  }
+}
+
+function getTeamName(idx) {
+  if (idx === null || idx === undefined) return '?';
+  return teams[idx] ? teams[idx].color + ' ' + teams[idx].name : '?';
+}
+
+function renderSchedule() {
+  updateKOMatches();
+  const container = document.getElementById('schedule-container');
+  const grouped = {};
+  matches.forEach(m => {
+    const key = m.phase;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(m);
+  });
+
+  let html = '';
+  Object.entries(grouped).forEach(([phase, ms]) => {
+    html += `<div class="round-label">${phase}${phase==='Finale'?'<span class="ko-badge ko-finale">FINALE</span>':phase==='Halbfinale'?'<span class="ko-badge ko-halbfinale">KO-Runde</span>':''}</div>`;
+    ms.forEach((m, mi) => {
+      const r = results[m.id];
+      const t1name = getTeamName(m.team1);
+      const t2name = getTeamName(m.team2);
+      const winner = r ? r.winner : null;
+      const w1 = winner === m.team1;
+      const w2 = winner === m.team2;
+      html += `<div class="match-card" id="mc_${m.id}">
+        <div class="match-court">Court ${m.court}</div>
+        <div class="match-teams">
+          <div class="match-team" style="${w1?'color:var(--green-mid);':''}">${t1name}</div>
+          <div class="match-vs">vs</div>
+          <div class="match-team" style="${w2?'color:var(--green-mid);':''}">${t2name}</div>
+        </div>`;
+      if (m.team1 !== null && m.team2 !== null) {
+        const s1 = r ? r.score1 : '';
+        const s2 = r ? r.score2 : '';
+        html += `<div class="match-result">
+          <input class="score-input" type="number" min="0" max="7" value="${s1}" placeholder="0" id="s1_${m.id}" onchange="previewScore('${m.id}')">
+          <div class="score-sep">:</div>
+          <input class="score-input" type="number" min="0" max="7" value="${s2}" placeholder="0" id="s2_${m.id}" onchange="previewScore('${m.id}')">
+          <button class="btn btn-green save-match-btn" onclick="saveScore('${m.id}', ${m.team1}, ${m.team2})">✓</button>
+        </div>`;
+        if (r) html += `<div class="match-winner-badge">🏆 ${getTeamName(winner)}</div>`;
+      } else {
+        html += `<div style="font-size:13px;color:rgba(255,255,255,0.3);font-style:italic;">Wird nach Gruppenphase besetzt</div>`;
+      }
+      html += `</div>`;
+    });
+  });
+  container.innerHTML = html;
+
+  const groupDone = allGroupMatchesDone();
+  const phaseText = document.getElementById('phase-text');
+  if (results['final']) {
+    phaseText.textContent = '🏆 Turnier abgeschlossen!';
+  } else if (groupDone) {
+    phaseText.textContent = 'KO-Phase läuft';
+  } else {
+    phaseText.textContent = 'Gruppenphase läuft';
+  }
+}
+
+function previewScore(matchId) {}
+
+function saveScore(matchId, t1, t2) {
+  const s1 = parseInt(document.getElementById('s1_' + matchId)?.value);
+  const s2 = parseInt(document.getElementById('s2_' + matchId)?.value);
+  if (isNaN(s1) || isNaN(s2)) { showToast('Bitte gültige Spielstände eingeben!'); return; }
+  if (s1 === s2) { showToast('Kein Unentschieden möglich — bitte korrekten Stand eingeben!'); return; }
+  if (s1 < 0 || s2 < 0 || s1 > 7 || s2 > 7) { showToast('Spielstand muss zwischen 0 und 7 liegen!'); return; }
+  results[matchId] = { score1: s1, score2: s2, winner: s1 > s2 ? t1 : t2 };
+  renderAll();
+  showToast('Ergebnis gespeichert! ✓');
+}
+
+function renderAll() {
+  renderStandings();
+  renderSchedule();
+}
+
+function resetAll() {
+  if (tournamentStarted && !confirm('Wirklich alles zurücksetzen? Das Turnier und alle Ergebnisse gehen verloren!')) return;
+  players = [];
+  teams = [];
+  matches = [];
+  results = {};
+  tournamentStarted = false;
+  renderPlayers();
+  document.getElementById('section-teams').classList.add('hidden');
+  document.getElementById('section-table').classList.add('hidden');
+  document.getElementById('section-schedule').classList.add('hidden');
+  document.getElementById('div-schedule').style.display = 'none';
+  document.getElementById('div-schedule2').style.display = 'none';
+  showToast('Alles zurückgesetzt!');
+}
+</script>
+</body>
+</html>
