@@ -997,9 +997,9 @@ function renderSchedule() {
       html += `<div class="match-card" id="mc_${m.id}">
         <div class="match-court">Court ${m.court}</div>
         <div class="match-teams">
-          <div class="match-team" style="${w1?'color:var(--green-mid);':''}">${t1name}</div>
-          <div class="match-vs">vs</div>
-          <div class="match-team" style="${w2?'color:var(--green-mid);':''}">${t2name}</div>
+         <div class="match-team" style="${w1?'color:var(--green-mid);cursor:pointer;':''}cursor:pointer;" onclick="quickWin('${m.id}', ${m.team1}, ${m.team2}, 1)"> ${t1name}</div>         
+         <div class="match-vs">vs</div>         
+         <div class="match-team" style="${w2?'color:var(--green-mid);cursor:pointer;':''}cursor:pointer;" onclick="quickWin('${m.id}', ${m.team2}, ${m.team1}, 2)"> ${t2name}</div>
         </div>`;
       if (m.team1 !== null && m.team2 !== null) {
         const s1 = r ? r.score1 : '';
@@ -1071,6 +1071,19 @@ function resetAll() {
   document.getElementById('div-schedule2').style.display = 'none';
   showToast('Alles zurückgesetzt!');
 }
+
+function quickWin(matchId, winner, loser) {
+  const match = matches.find(m => m.id === matchId);
+  const isTeam1Winner = match.team1 === winner;
+  results[matchId] = {
+    score1: isTeam1Winner ? 6 : 0,
+    score2: isTeam1Winner ? 0 : 6,
+    winner
+  };
+
+  renderAll();
+  showToast('Ergebnis: 6:0 gespeichert');
+} 
 </script>
 </body>
 </html>
