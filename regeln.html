@@ -8,8 +8,22 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --green: #1a9c5b; --green-dark: #0f6b3e; --green-mid: #2ec97a;
-            --black: #0d0d0d; --white: #ffffff; --gold: #e8b923; --radius: 12px;
+            --green: #1a9c5b;
+            --green-dark: #0f6b3e;
+            --green-light: #d4f5e3;
+            --green-mid: #2ec97a;
+            --court: #1a9c5b;
+            --black: #0d0d0d;
+            --white: #ffffff;
+            --gray-100: #f5f5f5;
+            --gray-200: #e8e8e8;
+            --gray-400: #9a9a9a;
+            --gray-600: #555;
+            --gold: #e8b923;
+            --gold-dark: #8c6f10;
+            --gold-light: #f8e7a3;
+            --radius: 12px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.10);
         }
         body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); min-height: 100vh; overflow-x: hidden; }
 
@@ -48,6 +62,7 @@
         .score-seq { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
         .score-ball { width: 46px; height: 46px; border-radius: 50%; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: rgba(255,255,255,0.7); }
         .score-ball.active { background: var(--green-dark); border-color: var(--green); color: var(--green-mid); }
+        .score-ball.win { background: var(--gold-dark); border-color: var(--gold); color: var(--gold-light); }
         .score-arrow { color: rgba(255,255,255,0.2); font-size: 14px; }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(255,255,255,0.07); margin-top: 32px; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
@@ -92,7 +107,10 @@
         <div class="story-card">
             <div class="story-icon">🎾</div>
             <div class="story-text">
-                <strong>Nathanael Zech</strong> verlässt Tomaselli Gabriel — und das wird gefeiert wie es sich gehört: mit einem exklusiven Padel-Turnier für auserwählte Kolleginnen und Kollegen. Zwei Courts, spannende Matches, Siegerpokal, Bier und jede Menge unvergessliche Momente. <strong>Willkommen beim Padel-Turnier Ausstand ZENA!</strong>
+                <strong>Nathanael Zech</strong> verlässt Tomaselli Gabriel — und das wird gefeiert wie es sich gehört:<br>
+                mit einem exklusiven Padel-Turnier für auserwählte Kolleginnen und Kollegen.<br>
+                Zwei Courts, spannende Matches, Siegerpokal, Bier und jede Menge unvergessliche Momente.<br>
+                <strong>Willkommen beim Padel-Turnier Ausstand ZENA!</strong>
             </div>
         </div>
     </div>
@@ -127,7 +145,13 @@
             </div>
         </div>
         <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:24px;">
-            <h3 style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Punktzählung pro Game</h3>
+            <h3 style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Erkärung</h3>
+            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+                <strong style="color:#fff;">Modus:</strong> Jeder gegen jeden <strong style="color:var(--green-mid);">(Gruppenphase)</strong> → Halbfinale: 1. vs. 4. und 2. vs. 3. → Finale.
+            </p>
+            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+                <strong style="color:#fff;">Punkte:</strong> Gezählt wird wie beim <strong style="color:var(--green-mid);">Tennis</strong>
+            </p>
             <div class="score-seq">
                 <div class="score-ball">0</div>
                 <div class="score-arrow">→</div>
@@ -140,10 +164,27 @@
                 <div class="score-ball active">GAME</div>
             </div>
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
-                <strong style="color:#fff;">Einstand:</strong> Bei <strong style="color:var(--green-mid);">40:40 (Einstand)</strong> wird mit <strong style="color:var(--green-mid);">Golden Point</strong> gespielt — der nächste Punkt entscheidet das Game. Kein Advantage, kein Deuce. Gespielt wird bis 6 Games (1 Satz).
+                <strong style="color:#fff;">Sieger:</strong> Gespielt wird bis ein Team 6 Games gewonnen hat <strong style="color:var(--green-mid);">(1 Satz)</strong>.
             </p>
+            <div class="score-seq">
+                <div class="score-ball">Game1</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game2</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game3</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game4</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game5</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game6</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball active">Satz</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball win">Sieger</div>
+            </div>
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
-                <strong style="color:#fff;">Modus:</strong> Jeder gegen jeden (Gruppenphase) → Halbfinale: 1. vs. 4. und 2. vs. 3. → Finale.
+                <strong style="color:#fff;">Einstand:</strong> Bei <strong style="color:var(--green-mid);">40:40 (Einstand)</strong> wird mit <strong style="color:var(--green-mid);">Golden Point</strong> gespielt — der nächste Punkt entscheidet das Game.
             </p>
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
                 <strong style="color:#fff;">Tabelle:</strong> Bei Punktegleichstand entscheidet die <strong style="color:var(--green-mid);">Game-Differenz (DIF)</strong> — also die Summe aller gewonnenen minus aller verlorenen Games über alle Spiele.
