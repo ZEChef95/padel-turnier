@@ -1,0 +1,221 @@
+cat > /mnt/user-data/outputs/regeln.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padel-Turnier Ausstand ZENA – Regeln & Spielort</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --green: #1a9c5b; --green-dark: #0f6b3e; --green-mid: #2ec97a;
+            --black: #0d0d0d; --white: #ffffff; --gold: #e8b923; --radius: 12px;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); min-height: 100vh; overflow-x: hidden; }
+
+        .hero { position: relative; background: linear-gradient(135deg, #0a2a18 0%, #0d3d22 50%, #0a2a18 100%); overflow: hidden; }
+        .hero-court-lines { position: absolute; inset: 0; opacity: 0.07; background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px); background-size: 60px 60px; }
+        .hero-arc { position: absolute; bottom: -80px; left: 50%; transform: translateX(-50%); width: 140%; height: 200px; background: var(--black); border-radius: 50% 50% 0 0; }
+        .hero-inner { position: relative; z-index: 2; text-align: center; padding: 60px 20px 120px; }
+        .hero-eyebrow { display: inline-block; background: var(--green); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 6px 18px; border-radius: 100px; margin-bottom: 24px; }
+        .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px, 10vw, 110px); letter-spacing: 2px; line-height: 0.95; color: var(--white); margin-bottom: 12px; }
+        .hero-title span { color: var(--green-mid); }
+        .hero-subtitle { font-size: clamp(14px, 2.5vw, 18px); color: rgba(255,255,255,0.55); font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 32px; }
+        .hero-date { display: inline-flex; align-items: center; gap: 20px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 100px; padding: 12px 28px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); flex-wrap: wrap; justify-content: center; }
+        .hero-date-sep { width: 4px; height: 4px; border-radius: 50%; background: var(--green-mid); }
+
+        section { padding: 64px 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--green-mid); margin-bottom: 8px; }
+        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 5vw, 52px); letter-spacing: 1px; margin-bottom: 32px; color: var(--white); }
+
+        .story-section { background: #111; }
+        .story-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius); padding: 32px; display: flex; gap: 24px; align-items: flex-start; }
+        .story-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--green-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 22px; }
+        .story-text { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.7); }
+        .story-text strong { color: var(--green-mid); font-weight: 600; }
+
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; border: none; transition: all 0.18s; text-decoration: none; }
+        .btn-green { background: var(--green); color: #fff; }
+        .btn-green:hover { background: var(--green-dark); }
+
+        .rules-section { background: #0d0d0d; }
+        .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .rule-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius); padding: 20px; text-align: center; }
+        .rule-icon { font-size: 28px; margin-bottom: 10px; }
+        .rule-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+        .rule-value { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: var(--green-mid); }
+        .score-seq { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
+        .score-ball { width: 46px; height: 46px; border-radius: 50%; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: rgba(255,255,255,0.7); }
+        .score-ball.active { background: var(--green-dark); border-color: var(--green); color: var(--green-mid); }
+        .score-arrow { color: rgba(255,255,255,0.2); font-size: 14px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(255,255,255,0.07); margin-top: 32px; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        .location-section { background: #111; }
+        .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+        @media(max-width: 640px) { .location-grid { grid-template-columns: 1fr; } }
+        .location-info { display: flex; flex-direction: column; gap: 20px; }
+        .location-detail { display: flex; gap: 16px; align-items: flex-start; }
+        .location-detail-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--green-dark); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .location-detail-text { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+        .location-detail-text strong { display: block; font-weight: 600; color: #fff; font-size: 15px; margin-bottom: 2px; }
+        .map-embed { border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(255,255,255,0.07); height: 280px; }
+        .map-embed iframe { width: 100%; height: 100%; border: none; }
+
+        footer { background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.05); padding: 32px 20px; text-align: center; font-size: 13px; color: rgba(255,255,255,0.25); }
+        footer span { color: var(--green-mid); }
+        .divider { height: 1px; background: rgba(255,255,255,0.06); }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-court-lines"></div>
+    <div class="hero-inner">
+        <div class="hero-eyebrow">⚡ Ausstand-Turnier · Tomaselli Gabriel</div>
+        <h1 class="hero-title">Padel<br><span>Ausstand</span><br>ZENA</h1>
+        <p class="hero-subtitle">Farewell — Nathanael Zech</p>
+        <div class="hero-date">
+            <span>📅 25. Juli 2026</span>
+            <div class="hero-date-sep"></div>
+            <span>🕕 18:00 – 20:00 Uhr</span>
+            <div class="hero-date-sep"></div>
+            <span>📍 PADELZONE Götzis</span>
+        </div>
+    </div>
+    <div class="hero-arc"></div>
+</div>
+
+<section class="story-section">
+    <div class="container">
+        <div class="story-card">
+            <div class="story-icon">🎾</div>
+            <div class="story-text">
+                <strong>Nathanael Zech</strong> verlässt Tomaselli Gabriel — und das wird gefeiert wie es sich gehört: mit einem exklusiven Padel-Turnier für auserwählte Kolleginnen und Kollegen. Zwei Courts, spannende Matches, Siegerpokal, Bier und jede Menge unvergessliche Momente. <strong>Willkommen beim Padel-Turnier Ausstand ZENA!</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="rules-section">
+    <div class="container">
+        <div class="section-label">Regeln</div>
+        <h2 class="section-title">So wird gespielt</h2>
+        <div class="rules-grid">
+            <div class="rule-card">
+                <div class="rule-icon">🏆</div>
+                <div class="rule-title">Sieg</div>
+                <div class="rule-value">+2 Punkte</div>
+            </div>
+            <div class="rule-card">
+                <div class="rule-icon">❌</div>
+                <div class="rule-title">Niederlage</div>
+                <div class="rule-value">0 Punkte</div>
+            </div>
+            <div class="rule-card">
+                <div class="rule-icon">🎯</div>
+                <div class="rule-title">Sätze pro Spiel</div>
+                <div class="rule-value">1 Satz</div>
+            </div>
+            <div class="rule-card">
+                <div class="rule-icon">🏅</div>
+                <div class="rule-title">Games zum Sieg</div>
+                <div class="rule-value">6 Games</div>
+            </div>
+        </div>
+        <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:24px;">
+            <h3 style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Punktzählung pro Game</h3>
+            <div class="score-seq">
+                <div class="score-ball">0</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">15</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">30</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">40</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball active">GAME</div>
+            </div>
+            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+                Bei <strong style="color:var(--green-mid);">40:40 (Einstand)</strong> wird mit <strong style="color:var(--green-mid);">Golden Point</strong> gespielt — der nächste Punkt entscheidet das Game. Kein Advantage, kein Deuce. Gespielt wird bis 6 Games (1 Satz).
+            </p>
+            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+                <strong style="color:#fff;">Modus:</strong> Jeder gegen jeden (Gruppenphase) → Halbfinale: 1. vs. 4. und 2. vs. 3. → Finale. Der Spielplan ist so aufgebaut, dass pro Runde <strong style="color:#fff;">jedes Team maximal einmal spielt</strong> und die Courts abgewechselt werden.
+            </p>
+            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+                <strong style="color:#fff;">Tabelle:</strong> Bei Punktegleichstand entscheidet die <strong style="color:#fff;">Game-Differenz (DIF)</strong> — also die Summe aller gewonnenen minus aller verlorenen Games über alle Spiele.
+            </p>
+        </div>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube-nocookie.com/embed/f-n9-kMxKQk" title="Padel Regeln Erklärung" allowfullscreen loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="location-section">
+    <div class="container">
+        <div class="section-label">Wo & Wann</div>
+        <h2 class="section-title">Spielort</h2>
+        <div class="location-grid">
+            <div class="location-info">
+                <div class="location-detail">
+                    <div class="location-detail-icon">🏟️</div>
+                    <div class="location-detail-text">
+                        <strong>PADEL Götzis – PADELZONE</strong>
+                        Indoor Sportzentrum Götzis
+                    </div>
+                </div>
+                <div class="location-detail">
+                    <div class="location-detail-icon">📍</div>
+                    <div class="location-detail-text">
+                        <strong>Adresse</strong>
+                        Mösleweg 23, 6840 Götzis, Vorarlberg
+                    </div>
+                </div>
+                <div class="location-detail">
+                    <div class="location-detail-icon">📅</div>
+                    <div class="location-detail-text">
+                        <strong>Datum</strong>
+                        Samstag, 25. Juli 2026
+                    </div>
+                </div>
+                <div class="location-detail">
+                    <div class="location-detail-icon">🕕</div>
+                    <div class="location-detail-text">
+                        <strong>Uhrzeit</strong>
+                        18:00 – 20:00 Uhr
+                    </div>
+                </div>
+                <div class="location-detail">
+                    <div class="location-detail-icon">🎾</div>
+                    <div class="location-detail-text">
+                        <strong>Courts</strong>
+                        2 Indoor Padel Courts
+                    </div>
+                </div>
+                <a href="https://www.google.com/maps/place/M%C3%B6sleweg+23,+6840+G%C3%B6tzis" target="_blank" class="btn btn-green" style="margin-top:4px;">
+                    📌 In Google Maps öffnen
+                </a>
+            </div>
+            <div class="map-embed">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2691.5!2d9.6355!3d47.3333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479b3f86588eaa01%3A0xd74078e831a57c21!2sM%C3%B6sleweg%2023%2C%206840%20G%C3%B6tzis!5e0!3m2!1sde!2sat!4v1700000000000"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>Padel-Turnier Ausstand ZENA · <span>25. Juli 2026</span> · PADELZONE Götzis · Farewell <span>Nathanael Zech</span> 🎾</p>
+</footer>
+
+</body>
+</html>
