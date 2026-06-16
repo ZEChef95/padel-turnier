@@ -248,17 +248,25 @@
         }
 
         .table-section { background: #111; }
-        .standings-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+        .standings-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px; }
         .standings-table th {
             text-align: left; padding: 12px 16px;
             font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
             color: rgba(255,255,255,0.35);
             border-bottom: 1px solid rgba(255,255,255,0.07);
+            white-space: nowrap;
         }
         .standings-table td {
             padding: 14px 16px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             color: rgba(255,255,255,0.8);
+            white-space: nowrap;
         }
         .standings-table tr:hover td { background: rgba(255,255,255,0.02); }
         .standing-pos {
@@ -385,9 +393,6 @@
         }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        @media(max-width: 640px) {
-        }
-
         .location-detail-text strong { display: block; font-weight: 600; color: #fff; font-size: 15px; margin-bottom: 2px; }
 
         .map-embed iframe { width: 100%; height: 100%; border: none; }
@@ -407,6 +412,7 @@
             font-size: 14px; font-weight: 500; z-index: 9999;
             opacity: 0; transform: translateY(10px); transition: all 0.25s; pointer-events: none;
         }
+        .toast.show { opacity: 1; transform: translateY(0); }
 
         .hidden { display: none !important; }
         .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0; }
@@ -428,6 +434,20 @@
             margin-bottom: 20px; font-style: italic;
         }
         .tip-text span { color: var(--green-mid); }
+
+        /* Mobile refinements */
+        @media (max-width: 480px) {
+            section { padding: 44px 16px; }
+            .hero-inner { padding: 48px 16px 100px; }
+            .container { max-width: 100%; }
+            .player-input-row { flex-wrap: wrap; }
+            .player-input-row input { width: 100%; }
+            .player-input-row button { width: 100%; justify-content: center; }
+            .standings-table th, .standings-table td { padding: 10px 12px; font-size: 13px; }
+            .match-card { padding: 14px 14px; }
+            .score-input { width: 44px; font-size: 18px; }
+            .hero-date { gap: 12px; padding: 10px 18px; }
+        }
     </style>
 </head>
 <body>
@@ -503,21 +523,23 @@
         <div id="phase-badge"><div class="pulse-dot"></div><span id="phase-text">Gruppenphase läuft</span></div>
         <div class="section-label">Live</div>
         <h2 class="section-title">Tabelle</h2>
-        <table class="standings-table">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Team</th>
-                <th title="Spiele gespielt">SP</th>
-                <th title="Siege">S</th>
-                <th title="Niederlagen">N</th>
-                <th title="Games (gewonnen:verloren)">G</th>
-                <th title="Game-Differenz">DIF</th>
-                <th title="Punkte">PKT</th>
-            </tr>
-            </thead>
-            <tbody id="standings-body"></tbody>
-        </table>
+        <div class="table-wrapper">
+            <table class="standings-table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Team</th>
+                    <th title="Spiele gespielt">SP</th>
+                    <th title="Siege">S</th>
+                    <th title="Niederlagen">N</th>
+                    <th title="Games (gewonnen:verloren)">G</th>
+                    <th title="Game-Differenz">DIF</th>
+                    <th title="Punkte">PKT</th>
+                </tr>
+                </thead>
+                <tbody id="standings-body"></tbody>
+            </table>
+        </div>
     </div>
 </section>
 
@@ -701,26 +723,66 @@
         saveState(); showToast('Teams ausgelost! 🎲');
     }
 
-    function generateRoundRobin() {
-        const n = teams.length;
-        const pairs = [];
-        for (let i=0; i<n; i++) for (let j=i+1; j<n; j++) pairs.push([i,j]);
-        const rounds = [], scheduled = new Array(pairs.length).fill(false);
-        while (scheduled.some(s=>!s)) {
-            const round = [], usedTeams = new Set();
-            for (let k=0; k<pairs.length; k++) {
-                if (scheduled[k]) continue;
-                const [a,b] = pairs[k];
-                if (usedTeams.has(a)||usedTeams.has(b)||round.length>=2) continue;
-                round.push(pairs[k]); usedTeams.add(a); usedTeams.add(b); scheduled[k]=true;
+    // --- Fairer Spielplan: klassisches Round-Robin (Kreismethode) + faire Court-Verteilung ---
+
+    // Erzeugt die "logischen" Round-Robin-Runden: in jeder Runde spielt jedes Team höchstens
+    // einmal. Bei ungerader Teamanzahl bekommt pro Runde genau ein Team eine reihum
+    // rotierende Pause, sodass am Ende jedes Team gleich oft pausiert hat.
+    function roundRobinRounds(n) {
+        let arr = [...Array(n).keys()];
+        if (n % 2 !== 0) arr.push(-1); // -1 = Pause/Bye
+        const m = arr.length;
+        const totalRounds = m - 1;
+        const half = m / 2;
+        const rounds = [];
+        for (let r = 0; r < totalRounds; r++) {
+            const round = [];
+            for (let i = 0; i < half; i++) {
+                const a = arr[i], b = arr[m - 1 - i];
+                if (a !== -1 && b !== -1) round.push([a, b]);
             }
             rounds.push(round);
+            const fixed = arr[0];
+            const rest = arr.slice(1);
+            rest.unshift(rest.pop());
+            arr = [fixed, ...rest];
         }
+        return rounds;
+    }
+
+    // Verteilt die Paarungen (in Round-Robin-Reihenfolge) auf Zeit-Slots mit je `numCourts`
+    // gleichzeitigen Spielen. Innerhalb eines Slots darf kein Team doppelt vorkommen.
+    // Dadurch sind beide Courts so oft wie möglich gleichzeitig belegt, und kein Team
+    // muss mehrere Spiele in Folge bestreiten, während andere pausieren.
+    function packIntoSlots(rounds, numCourts) {
+        const queue = [];
+        rounds.forEach((round, ri) => round.forEach(pair => queue.push({ pair, ri })));
+        const slots = [];
+        while (queue.length) {
+            const slot = [];
+            const used = new Set();
+            for (let i = 0; i < queue.length && slot.length < numCourts; i++) {
+                const item = queue[i];
+                if (used.has(item.pair[0]) || used.has(item.pair[1])) continue;
+                slot.push(item);
+                used.add(item.pair[0]);
+                used.add(item.pair[1]);
+            }
+            slot.forEach(item => { const idx = queue.indexOf(item); queue.splice(idx, 1); });
+            slots.push(slot);
+        }
+        return slots;
+    }
+
+    function generateRoundRobin() {
+        const n = teams.length;
+        const logicalRounds = roundRobinRounds(n);
+        const slots = packIntoSlots(logicalRounds, 2);
         matches = [];
-        rounds.forEach((round,ri) => {
-            round.forEach((pair,ci) => {
-                const [a,b] = pair;
-                matches.push({ id:`g_${a}_${b}`, team1:a, team2:b, court:((ri+ci)%2===0)?1:2, roundNum:ri+1, phase:'Gruppenphase', ko:false });
+        slots.forEach((slot, si) => {
+            slot.forEach((item, ci) => {
+                const [a, b] = item.pair;
+                matches.push({ id:`g_${a}_${b}`, team1:a, team2:b, court: ci+1, roundNum: si+1, phase:'Gruppenphase', ko:false });
             });
         });
         matches.push({ id:'hf1', team1:null, team2:null, court:1, phase:'Halbfinale', ko:true, label:'Halbfinale 1 · 1. vs. 4.' });
@@ -866,7 +928,7 @@
 
     function resetAll() {
         if (tournamentStarted&&!confirm('Wirklich alles zurücksetzen?')) return;
-        players=[]; teams=[]; matches=[]; results=[]; tournamentStarted=false;
+        players=[]; teams=[]; matches=[]; results={}; tournamentStarted=false;
         try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
         renderPlayers();
         document.getElementById('section-teams').classList.add('hidden');
