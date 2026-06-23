@@ -23,6 +23,8 @@
             --gold: #e8b923;
             --gold-dark: #8c6f10;
             --gold-light: #f8e7a3;
+            --blue: #3b82f6;
+            --blue-dark: #1d4ed8;
             --radius: 12px;
             --shadow: 0 4px 24px rgba(0,0,0,0.10);
         }
@@ -42,110 +44,59 @@
             overflow: hidden;
         }
         .hero-court-lines {
-            position: absolute;
-            inset: 0;
-            opacity: 0.07;
-            background-image:
-                    linear-gradient(to right, #fff 1px, transparent 1px),
-                    linear-gradient(to bottom, #fff 1px, transparent 1px);
+            position: absolute; inset: 0; opacity: 0.07;
+            background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px);
             background-size: 60px 60px;
         }
         .hero-arc {
-            position: absolute;
-            bottom: -80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140%;
-            height: 200px;
-            background: var(--black);
-            border-radius: 50% 50% 0 0;
+            position: absolute; bottom: -80px; left: 50%; transform: translateX(-50%);
+            width: 140%; height: 200px; background: var(--black); border-radius: 50% 50% 0 0;
         }
         .hero-inner {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 60px 20px 120px;
+            position: relative; z-index: 2; text-align: center; padding: 60px 20px 120px;
         }
         .hero-eyebrow {
-            display: inline-block;
-            background: var(--green);
-            color: #fff;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 6px 18px;
-            border-radius: 100px;
-            margin-bottom: 24px;
+            display: inline-block; background: var(--green); color: #fff;
+            font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+            padding: 6px 18px; border-radius: 100px; margin-bottom: 24px;
         }
         .hero-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(52px, 10vw, 110px);
-            letter-spacing: 2px;
-            line-height: 0.95;
-            color: var(--white);
-            margin-bottom: 12px;
+            font-size: clamp(52px, 10vw, 110px); letter-spacing: 2px; line-height: 0.95;
+            color: var(--white); margin-bottom: 12px;
         }
         .hero-title span { color: var(--green-mid); }
         .hero-subtitle {
-            font-size: clamp(14px, 2.5vw, 18px);
-            color: rgba(255,255,255,0.55);
-            font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 32px;
+            font-size: clamp(14px, 2.5vw, 18px); color: rgba(255,255,255,0.55);
+            font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 32px;
         }
         .hero-date {
-            display: inline-flex;
-            align-items: center;
-            gap: 20px;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 100px;
-            padding: 12px 28px;
-            font-size: 14px;
-            font-weight: 500;
-            color: rgba(255,255,255,0.8);
-            flex-wrap: wrap;
-            justify-content: center;
+            display: inline-flex; align-items: center; gap: 20px;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 100px; padding: 12px 28px; font-size: 14px; font-weight: 500;
+            color: rgba(255,255,255,0.8); flex-wrap: wrap; justify-content: center;
         }
         .hero-date-sep { width: 4px; height: 4px; border-radius: 50%; background: var(--green-mid); }
 
         section { padding: 64px 20px; }
         .container { max-width: 900px; margin: 0 auto; }
         .section-label {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--green-mid);
-            margin-bottom: 8px;
+            font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--green-mid); margin-bottom: 8px;
         }
         .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(32px, 5vw, 52px);
-            letter-spacing: 1px;
-            margin-bottom: 32px;
-            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 5vw, 52px);
+            letter-spacing: 1px; margin-bottom: 32px; color: var(--white);
         }
 
         .story-section { background: #111; }
         .story-card {
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: var(--radius);
-            padding: 32px;
-            display: flex;
-            gap: 24px;
-            align-items: flex-start;
+            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius); padding: 32px; display: flex; gap: 24px; align-items: flex-start;
         }
         .story-icon {
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            background: var(--green-dark);
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            font-size: 22px;
+            width: 48px; height: 48px; border-radius: 50%; background: var(--green-dark);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 22px;
         }
         .story-text { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.7); }
         .story-text strong { color: var(--green-mid); font-weight: 600; }
@@ -153,120 +104,247 @@
         .reg-section { background: var(--black); }
         .player-input-row { display: flex; gap: 12px; margin-bottom: 16px; }
         .player-input-row input {
-            flex: 1;
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: var(--white);
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            padding: 12px 16px;
-            transition: border-color 0.2s;
-            outline: none;
+            flex: 1; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; color: var(--white); font-size: 15px;
+            font-family: 'Inter', sans-serif; padding: 12px 16px; transition: border-color 0.2s; outline: none;
         }
         .player-input-row input:focus { border-color: var(--green-mid); }
         .player-input-row input::placeholder { color: rgba(255,255,255,0.3); }
 
         .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 12px 22px;
-            border-radius: 8px;
-            font-size: 14px; font-weight: 600;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer; border: none;
-            transition: all 0.18s;
-            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px;
+            border-radius: 8px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif;
+            cursor: pointer; border: none; transition: all 0.18s; text-decoration: none;
         }
         .btn-green { background: var(--green); color: #fff; }
         .btn-green:hover { background: var(--green-dark); }
         .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.7);
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);
         }
         .btn-outline:hover { border-color: var(--green-mid); color: var(--green-mid); }
         .btn-gold { background: var(--gold); color: #111; }
         .btn-gold:hover { background: #d4a91e; }
+        .btn-blue { background: var(--blue); color: #fff; }
+        .btn-blue:hover { background: var(--blue-dark); }
+        .btn-sm { padding: 7px 14px; font-size: 13px; }
         .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         .players-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; min-height: 44px; }
         .player-chip {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 100px;
-            padding: 8px 16px;
-            font-size: 14px; font-weight: 500;
-            color: rgba(255,255,255,0.85);
+            display: inline-flex; align-items: center; gap: 8px; background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 100px;
+            padding: 8px 16px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.85);
+            cursor: default;
         }
+        .player-chip.in-pot1 { border-color: var(--gold); background: rgba(232,185,35,0.08); }
+        .player-chip.in-pot2 { border-color: var(--blue); background: rgba(59,130,246,0.08); }
         .player-chip button {
-            background: none; border: none;
-            color: rgba(255,255,255,0.3);
-            cursor: pointer; font-size: 16px; line-height: 1; padding: 0;
-            transition: color 0.15s;
+            background: none; border: none; color: rgba(255,255,255,0.3);
+            cursor: pointer; font-size: 16px; line-height: 1; padding: 0; transition: color 0.15s;
         }
         .player-chip button:hover { color: #e74c3c; }
         .player-count { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
         .player-count span { color: var(--green-mid); font-weight: 600; }
 
+        /* ── MODE TOGGLE ── */
+        .mode-toggle {
+            display: flex; gap: 0; margin-bottom: 28px;
+            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; padding: 4px; width: fit-content;
+        }
+        .mode-btn {
+            padding: 10px 20px; border-radius: 7px; font-size: 14px; font-weight: 600;
+            font-family: 'Inter', sans-serif; cursor: pointer; border: none;
+            background: transparent; color: rgba(255,255,255,0.4); transition: all 0.18s;
+        }
+        .mode-btn.active { background: var(--green); color: #fff; }
+
+        /* ── LOSTÖPFE ── */
+        .pots-container { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        @media(max-width:600px) { .pots-container { grid-template-columns: 1fr; } }
+
+        .pot-box {
+            background: #1a1a1a; border-radius: var(--radius); padding: 20px;
+            border: 2px solid transparent; transition: border-color 0.2s;
+        }
+        .pot-box.pot1 { border-color: rgba(232,185,35,0.3); }
+        .pot-box.pot2 { border-color: rgba(59,130,246,0.3); }
+
+        .pot-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+        }
+        .pot-title {
+            font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .pot1 .pot-title { color: var(--gold); }
+        .pot2 .pot-title { color: var(--blue); }
+
+        .pot-count {
+            font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 100px;
+        }
+        .pot1 .pot-count { background: rgba(232,185,35,0.15); color: var(--gold); }
+        .pot2 .pot-count { background: rgba(59,130,246,0.15); color: var(--blue); }
+
+        .pot-desc { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 12px; }
+
+        .pot-chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 40px; }
+        .pot-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 12px; border-radius: 100px; font-size: 13px; font-weight: 500;
+        }
+        .pot1 .pot-chip { background: rgba(232,185,35,0.12); color: var(--gold); border: 1px solid rgba(232,185,35,0.25); }
+        .pot2 .pot-chip { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
+        .pot-chip-remove {
+            background: none; border: none; cursor: pointer; font-size: 14px; line-height: 1;
+            color: rgba(255,255,255,0.2); padding: 0; transition: color 0.15s;
+        }
+        .pot-chip-remove:hover { color: #e74c3c; }
+
+        .unassigned-pool {
+            background: #141414; border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius); padding: 16px; margin-bottom: 16px;
+        }
+        .unassigned-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+            color: rgba(255,255,255,0.3); margin-bottom: 10px;
+        }
+        .unassigned-chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 36px; }
+        .unassigned-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #222; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 100px; padding: 6px 12px; font-size: 13px;
+            color: rgba(255,255,255,0.7); cursor: pointer; transition: all 0.15s;
+        }
+        .unassigned-chip:hover { border-color: var(--green-mid); color: var(--green-mid); background: rgba(46,201,122,0.07); }
+
+        .pot-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .pot-action-btn {
+            padding: 6px 14px; border-radius: 7px; font-size: 12px; font-weight: 600;
+            font-family: 'Inter', sans-serif; cursor: pointer; border: 1px solid transparent;
+            transition: all 0.15s;
+        }
+        .pot-action-btn.to-pot1 {
+            background: rgba(232,185,35,0.1); color: var(--gold); border-color: rgba(232,185,35,0.2);
+        }
+        .pot-action-btn.to-pot1:hover { background: rgba(232,185,35,0.2); }
+        .pot-action-btn.to-pot2 {
+            background: rgba(59,130,246,0.1); color: #93c5fd; border-color: rgba(59,130,246,0.2);
+        }
+        .pot-action-btn.to-pot2:hover { background: rgba(59,130,246,0.2); }
+
+        .pot-info-box {
+            background: rgba(46,201,122,0.05); border: 1px solid rgba(46,201,122,0.12);
+            border-radius: 8px; padding: 14px 16px; margin-bottom: 20px;
+            font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6;
+        }
+        .pot-info-box strong { color: var(--green-mid); }
+
+        /* ── TEAMS SECTION ── */
         .teams-section { background: #0d0d0d; }
         .teams-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px; margin-top: 24px;
         }
         .team-card {
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: var(--radius); padding: 20px;
-            transition: border-color 0.2s;
+            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius); padding: 20px; transition: border-color 0.2s; position: relative;
         }
         .team-card:hover { border-color: rgba(46,201,122,0.3); }
         .team-name {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 22px; letter-spacing: 1px;
-            color: var(--green-mid); margin-bottom: 12px;
-            display: flex; align-items: center; gap: 10px;
+            font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px;
+            color: var(--green-mid); margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
         }
         .team-num {
-            width: 28px; height: 28px; border-radius: 50%;
-            background: var(--green-dark);
+            width: 28px; height: 28px; border-radius: 50%; background: var(--green-dark);
             display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: 700; color: #fff;
-            font-family: 'Inter', sans-serif;
+            font-size: 13px; font-weight: 700; color: #fff; font-family: 'Inter', sans-serif;
         }
         .team-players { list-style: none; }
         .team-players li {
-            font-size: 14px; color: rgba(255,255,255,0.75);
-            padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px; color: rgba(255,255,255,0.75); padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             display: flex; align-items: center; gap: 8px;
         }
         .team-players li:last-child { border-bottom: none; }
         .team-players li::before {
-            content: ''; width: 6px; height: 6px;
-            border-radius: 50%; background: var(--green); flex-shrink: 0;
+            content: ''; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--green); flex-shrink: 0;
         }
 
+        /* ── TEAM EDITOR ── */
+        .edit-teams-btn {
+            display: flex; align-items: center; gap: 8px; padding: 10px 18px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6);
+            cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s;
+        }
+        .edit-teams-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(232,185,35,0.05); }
+
+        .team-editor {
+            background: #141414; border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius); padding: 24px; margin-top: 20px;
+        }
+        .team-editor-title {
+            font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6);
+            letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
+        }
+        .swap-instruction {
+            font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 20px; line-height: 1.6;
+        }
+        .swap-instruction strong { color: var(--gold); }
+
+        .editor-teams-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px; margin-bottom: 16px;
+        }
+        .editor-team-card {
+            background: #1e1e1e; border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px; padding: 14px;
+        }
+        .editor-team-title {
+            font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: rgba(255,255,255,0.35); margin-bottom: 10px;
+        }
+        .editor-player {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 10px; border-radius: 7px; font-size: 13px; font-weight: 500;
+            color: rgba(255,255,255,0.8); cursor: pointer; transition: all 0.15s;
+            border: 2px solid transparent; margin-bottom: 4px; background: rgba(255,255,255,0.03);
+        }
+        .editor-player:last-child { margin-bottom: 0; }
+        .editor-player:hover { border-color: var(--gold); color: var(--gold); background: rgba(232,185,35,0.06); }
+        .editor-player.selected {
+            border-color: var(--gold); background: rgba(232,185,35,0.12); color: var(--gold);
+        }
+        .editor-player .pot-dot {
+            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+        }
+        .editor-player .pot-dot.p1 { background: var(--gold); }
+        .editor-player .pot-dot.p2 { background: var(--blue); }
+        .editor-player .pot-dot.none { background: rgba(255,255,255,0.15); }
+
+        .swap-status {
+            background: rgba(232,185,35,0.08); border: 1px solid rgba(232,185,35,0.2);
+            border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--gold);
+            margin-bottom: 12px; display: none;
+        }
+        .swap-status.show { display: block; }
+
+        /* ── TABLE SECTION ── */
         .table-section { background: #111; }
         .table-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255,255,255,0.07);
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.07);
         }
         .standings-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px; }
         .standings-table th {
-            text-align: left; padding: 12px 16px;
-            font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-            color: rgba(255,255,255,0.35);
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-            white-space: nowrap;
+            text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35);
+            border-bottom: 1px solid rgba(255,255,255,0.07); white-space: nowrap;
         }
         .standings-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            color: rgba(255,255,255,0.8);
-            white-space: nowrap;
+            padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.8); white-space: nowrap;
         }
         .standings-table tr:hover td { background: rgba(255,255,255,0.02); }
         .standing-pos {
@@ -274,13 +352,11 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 13px; font-weight: 700; font-family: 'Inter', sans-serif;
         }
-
         .team-name-cell { font-weight: 600; color: #fff; }
         .pts-cell { font-weight: 700; color: var(--green-mid); font-size: 16px; }
 
+        /* ── SCHEDULE SECTION ── */
         .schedule-section { background: var(--black); }
-
-        /* Round grouping with court columns */
         .round-block { margin-bottom: 32px; }
         .round-label {
             font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
@@ -292,59 +368,40 @@
             font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
             color: rgba(255,255,255,0.25); margin-bottom: 8px; padding-left: 4px;
         }
-
         .match-card {
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: var(--radius);
-            padding: 16px 18px; margin-bottom: 10px;
+            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px;
         }
-
-        .match-teams {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
-        }
+        .match-teams { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
         .match-team {
-            font-weight: 600; font-size: 14px;
-            color: rgba(255,255,255,0.85);
-            flex: 1; text-align: center;
-            cursor: pointer;
-            padding: 6px 4px;
-            border-radius: 6px;
-            transition: background 0.15s, color 0.15s;
-            user-select: none;
+            font-weight: 600; font-size: 14px; color: rgba(255,255,255,0.85);
+            flex: 1; text-align: center; cursor: pointer; padding: 6px 4px;
+            border-radius: 6px; transition: background 0.15s, color 0.15s; user-select: none;
         }
         .match-team:hover { background: rgba(46,201,122,0.08); color: var(--green-mid); }
-
         .match-team-hint {
             font-size: 10px; font-weight: 400; display: block;
             color: rgba(46,201,122,0.5); margin-top: 2px; letter-spacing: 1px;
         }
         .match-vs {
-            font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.2); letter-spacing: 2px;
-            flex-shrink: 0;
+            font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.2);
+            letter-spacing: 2px; flex-shrink: 0;
         }
         .match-result {
             display: flex; align-items: center; gap: 8px;
             justify-content: center; width: 100%; margin-top: 4px;
         }
         .score-input {
-            width: 52px;
-            background: #111;
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 6px;
-            color: var(--white);
-            font-size: 20px; font-weight: 700; text-align: center;
-            padding: 8px 4px;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 1px; outline: none;
-            transition: border-color 0.2s;
+            width: 52px; background: #111; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px; color: var(--white); font-size: 20px; font-weight: 700;
+            text-align: center; padding: 8px 4px; font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px; outline: none; transition: border-color 0.2s;
         }
         .score-input:focus { border-color: var(--green-mid); }
         .score-sep { font-size: 18px; font-weight: 700; color: rgba(255,255,255,0.2); flex-shrink: 0; }
         .save-match-btn { padding: 8px 14px; font-size: 13px; }
         .match-winner-badge {
-            font-size: 11px; font-weight: 600;
-            background: var(--green-dark); color: var(--green-mid);
+            font-size: 11px; font-weight: 600; background: var(--green-dark); color: var(--green-mid);
             padding: 3px 10px; border-radius: 100px; margin-top: 10px;
             display: block; text-align: center; width: 100%;
         }
@@ -355,33 +412,33 @@
         }
         .ko-halbfinale { background: #1a2a4a; color: #6ea8fe; }
         .ko-finale { background: #2a1a0a; color: var(--gold); }
-
         .ko-section { margin-top: 40px; }
 
+        /* ── RULES SECTION ── */
         .rules-section { background: #0d0d0d; }
         .rules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 16px; margin-bottom: 32px;
         }
         .rule-card {
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.07);
+            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07);
             border-radius: var(--radius); padding: 20px; text-align: center;
         }
         .rule-icon { font-size: 28px; margin-bottom: 10px; }
-        .rule-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+        .rule-title {
+            font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5);
+            margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase;
+        }
         .rule-value { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; color: var(--green-mid); }
         .score-seq {
             display: flex; align-items: center; justify-content: center;
             gap: 8px; flex-wrap: wrap; margin: 20px 0;
         }
         .score-ball {
-            width: 46px; height: 46px; border-radius: 50%;
-            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08);
+            width: 46px; height: 46px; border-radius: 50%; background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.08);
             display: flex; align-items: center; justify-content: center;
-            font-family: 'Bebas Neue', sans-serif; font-size: 17px;
-            color: rgba(255,255,255,0.7);
+            font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: rgba(255,255,255,0.7);
         }
         .score-ball.active { background: var(--green-dark); border-color: var(--green); color: var(--green-mid); }
         .score-ball.win { background: var(--gold-dark); border-color: var(--gold); color: var(--gold-light); }
@@ -393,13 +450,8 @@
         }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        .location-detail-text strong { display: block; font-weight: 600; color: #fff; font-size: 15px; margin-bottom: 2px; }
-
-        .map-embed iframe { width: 100%; height: 100%; border: none; }
-
         footer {
-            background: #0a0a0a;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.05);
             padding: 32px 20px; text-align: center;
             font-size: 13px; color: rgba(255,255,255,0.25);
         }
@@ -430,12 +482,10 @@
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         .tip-text {
-            font-size: 12px; color: rgba(255,255,255,0.3);
-            margin-bottom: 20px; font-style: italic;
+            font-size: 12px; color: rgba(255,255,255,0.3); margin-bottom: 20px; font-style: italic;
         }
         .tip-text span { color: var(--green-mid); }
 
-        /* Mobile refinements */
         @media (max-width: 480px) {
             section { padding: 44px 16px; }
             .hero-inner { padding: 48px 16px 100px; }
@@ -490,14 +540,74 @@
         <div class="section-label">Schritt 1</div>
         <h2 class="section-title">Spieler eintragen</h2>
         <div class="player-input-row">
-            <label for="player-input"></label><input type="text" id="player-input" placeholder="Vorname eingeben..." maxlength="30" autocomplete="off">
+            <label for="player-input"></label>
+            <input type="text" id="player-input" placeholder="Vorname eingeben..." maxlength="30" autocomplete="off">
             <button class="btn btn-green" onclick="addPlayer()">+ Hinzufügen</button>
         </div>
         <p class="player-count">Spieler: <span id="player-count">0</span> / 40 &nbsp;·&nbsp; Min. 8 für Turnierstart</p>
         <div class="players-grid" id="players-grid"></div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
-            <button class="btn btn-gold" id="generate-btn" onclick="generateTeams()" disabled>🎲 Teams generieren</button>
-            <button class="btn btn-outline" onclick="resetAll()">↺ Alles zurücksetzen</button>
+
+        <!-- Mode Toggle -->
+        <div style="margin-bottom:20px;">
+            <div class="mode-toggle">
+                <button class="mode-btn active" id="mode-random" onclick="setMode('random')">🎲 Zufällig</button>
+                <button class="mode-btn" id="mode-pots" onclick="setMode('pots')">🎯 Lostöpfe</button>
+            </div>
+        </div>
+
+        <!-- Random Mode -->
+        <div id="ui-random">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button class="btn btn-gold" id="generate-btn" onclick="generateTeams()" disabled>🎲 Teams generieren</button>
+                <button class="btn btn-outline" onclick="resetAll()">↺ Alles zurücksetzen</button>
+            </div>
+        </div>
+
+        <!-- Pots Mode -->
+        <div id="ui-pots" class="hidden">
+            <div class="pot-info-box">
+                <strong>So funktionieren Lostöpfe:</strong> Gib die starken Spieler in <strong style="color:var(--gold)">Topf 1</strong> – diese werden als Spieler 1 auf verschiedene Teams verteilt, spielen also garantiert <em>nicht</em> zusammen. Spieler in <strong style="color:#93c5fd">Topf 2</strong> werden als Spieler 2 zugelost. Nicht zugewiesene Spieler werden zufällig verteilt.
+            </div>
+
+            <div class="unassigned-pool" id="unassigned-pool">
+                <div class="unassigned-label">Nicht zugewiesen – klicken zum Zuordnen</div>
+                <div class="unassigned-chips" id="unassigned-chips"></div>
+            </div>
+
+            <div class="pots-container">
+                <div class="pot-box pot1" id="pot1-box">
+                    <div class="pot-header">
+                        <div class="pot-title">⭐ Topf 1 – Starke Spieler</div>
+                        <div class="pot-count" id="pot1-count">0</div>
+                    </div>
+                    <div class="pot-desc">Werden als Spieler 1 auf verschiedene Teams verteilt</div>
+                    <div class="pot-chips" id="pot1-chips"></div>
+                </div>
+                <div class="pot-box pot2" id="pot2-box">
+                    <div class="pot-header">
+                        <div class="pot-title">🔵 Topf 2 – Weitere Spieler</div>
+                        <div class="pot-count" id="pot2-count">0</div>
+                    </div>
+                    <div class="pot-desc">Werden als Spieler 2 zugelost</div>
+                    <div class="pot-chips" id="pot2-chips"></div>
+                </div>
+            </div>
+
+            <div id="active-player-actions" class="hidden" style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;margin-bottom:16px;">
+                <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:10px;">
+                    Spieler: <strong id="active-player-name" style="color:#fff;"></strong> zuordnen zu:
+                </div>
+                <div class="pot-actions">
+                    <button class="pot-action-btn to-pot1" onclick="assignToGroup('pot1')">⭐ Topf 1</button>
+                    <button class="pot-action-btn to-pot2" onclick="assignToGroup('pot2')">🔵 Topf 2</button>
+                    <button class="pot-action-btn" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);border-color:rgba(255,255,255,0.1);" onclick="assignToGroup(null)">✕ Keinem Topf</button>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button class="btn btn-gold" id="generate-pots-btn" onclick="generateTeamsFromPots()" disabled>🎯 Teams aus Töpfen generieren</button>
+                <button class="btn btn-outline" onclick="resetAll()">↺ Alles zurücksetzen</button>
+            </div>
         </div>
     </div>
 </section>
@@ -509,9 +619,23 @@
         <div class="section-label">Schritt 2</div>
         <h2 class="section-title">Zufällige Teams</h2>
         <div class="teams-grid" id="teams-grid"></div>
-        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
             <button class="btn btn-green" onclick="startTournament()">🏆 Turnier starten & Spielplan generieren</button>
-            <button class="btn btn-outline" onclick="generateTeams()">🎲 Neu auslosen</button>
+            <button class="btn btn-outline" onclick="regenerateTeams()">🎲 Neu auslosen</button>
+            <button class="edit-teams-btn" onclick="toggleTeamEditor()" id="edit-teams-toggle">✏️ Teams bearbeiten</button>
+        </div>
+
+        <!-- Team Editor -->
+        <div class="team-editor hidden" id="team-editor">
+            <div class="team-editor-title">✏️ Team-Editor</div>
+            <p class="swap-instruction">
+                Klicke auf einen Spieler, um ihn auszuwählen <strong>(gelb markiert)</strong>. Klicke dann einen anderen Spieler in einem anderen Team, um die beiden zu <strong>tauschen</strong>.
+            </p>
+            <div class="swap-status" id="swap-status"></div>
+            <div class="editor-teams-grid" id="editor-teams-grid"></div>
+            <div style="margin-top:12px;">
+                <button class="btn btn-outline btn-sm" onclick="clearSwapSelection()">Auswahl aufheben</button>
+            </div>
         </div>
     </div>
 </section>
@@ -527,14 +651,10 @@
             <table class="standings-table">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Team</th>
-                    <th title="Spiele gespielt">SP</th>
-                    <th title="Siege">S</th>
-                    <th title="Niederlagen">N</th>
+                    <th>#</th><th>Team</th><th title="Spiele gespielt">SP</th>
+                    <th title="Siege">S</th><th title="Niederlagen">N</th>
                     <th title="Games (gewonnen:verloren)">G</th>
-                    <th title="Game-Differenz">DIF</th>
-                    <th title="Punkte">PKT</th>
+                    <th title="Game-Differenz">DIF</th><th title="Punkte">PKT</th>
                 </tr>
                 </thead>
                 <tbody id="standings-body"></tbody>
@@ -561,29 +681,13 @@
         <div class="section-label">Regeln</div>
         <h2 class="section-title">So wird gespielt</h2>
         <div class="rules-grid">
-            <div class="rule-card">
-                <div class="rule-icon">🏆</div>
-                <div class="rule-title">Sieg</div>
-                <div class="rule-value">+2 Punkte</div>
-            </div>
-            <div class="rule-card">
-                <div class="rule-icon">❌</div>
-                <div class="rule-title">Niederlage</div>
-                <div class="rule-value">0 Punkte</div>
-            </div>
-            <div class="rule-card">
-                <div class="rule-icon">🎯</div>
-                <div class="rule-title">Sätze pro Spiel</div>
-                <div class="rule-value">1 Satz</div>
-            </div>
-            <div class="rule-card">
-                <div class="rule-icon">🏅</div>
-                <div class="rule-title">Games zum Sieg</div>
-                <div class="rule-value">6 Games</div>
-            </div>
+            <div class="rule-card"><div class="rule-icon">🏆</div><div class="rule-title">Sieg</div><div class="rule-value">+2 Punkte</div></div>
+            <div class="rule-card"><div class="rule-icon">❌</div><div class="rule-title">Niederlage</div><div class="rule-value">0 Punkte</div></div>
+            <div class="rule-card"><div class="rule-icon">🎯</div><div class="rule-title">Sätze pro Spiel</div><div class="rule-value">1 Satz</div></div>
+            <div class="rule-card"><div class="rule-icon">🏅</div><div class="rule-title">Games zum Sieg</div><div class="rule-value">6 Games</div></div>
         </div>
         <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:24px;">
-            <h3 style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Erkärung</h3>
+            <h3 style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Erklärung</h3>
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
                 <strong style="color:#fff;">Modus:</strong> Jeder gegen jeden <strong style="color:var(--green-mid);">(Gruppenphase)</strong> → Halbfinale: 1. vs. 4. und 2. vs. 3. → Finale.
             </p>
@@ -591,41 +695,17 @@
                 <strong style="color:#fff;">Punkte:</strong> Gezählt wird wie beim <strong style="color:var(--green-mid);">Tennis</strong>
             </p>
             <div class="score-seq">
-                <div class="score-ball">0</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball">15</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball">30</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball">40</div>
-                <div class="score-arrow">→</div>
+                <div class="score-ball">0</div><div class="score-arrow">→</div>
+                <div class="score-ball">15</div><div class="score-arrow">→</div>
+                <div class="score-ball">30</div><div class="score-arrow">→</div>
+                <div class="score-ball">40</div><div class="score-arrow">→</div>
                 <div class="score-ball active">GAME</div>
             </div>
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
                 <strong style="color:#fff;">Sieger:</strong> Gespielt wird bis ein Team 6 Games gewonnen hat <strong style="color:var(--green-mid);">(1 Satz)</strong>.
             </p>
-            <div class="score-seq">
-                <div class="score-ball">Game1</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball">Game2</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball">Game3</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball">Game4</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball">Game5</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball">Game6</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball active">Satz</div>
-                <div class="score-arrow">→</div>
-                <div class="score-ball win">Sieger</div>
-            </div>
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
-                <strong style="color:#fff;">Einstand:</strong> Bei <strong style="color:var(--green-mid);">40:40 (Einstand)</strong> wird mit <strong style="color:var(--green-mid);">Golden Point</strong> gespielt — der nächste Punkt entscheidet das Game.
-            </p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
-                <strong style="color:#fff;">Tabelle:</strong> Bei Punktegleichstand entscheidet die <strong style="color:var(--green-mid);">Game-Differenz (DIF)</strong> — also die Summe aller gewonnenen minus aller verlorenen Games über alle Spiele.
+                <strong style="color:#fff;">Tabelle:</strong> Bei Punktegleichstand entscheidet die <strong style="color:var(--green-mid);">Game-Differenz (DIF)</strong>.
             </p>
         </div>
         <div class="video-wrapper">
@@ -641,13 +721,21 @@
 <div class="toast" id="toast"></div>
 
 <script>
+    // ── STATE ──────────────────────────────────────────────────────────────────
     let players = [], teams = [], matches = [], results = {};
     let tournamentStarted = false;
-    const teamColors = ['🟢','🔵','🟡','🟠','🔴','🟣'];
-    const STORAGE_KEY = 'padel_zena_state_v1';
+    let drawMode = 'random'; // 'random' | 'pots'
+    let pot1 = [], pot2 = []; // player names in each pot
+    let activePlayerForPot = null; // name of player being assigned
+    // Team editor swap
+    let swapSelection = null; // { teamIdx, playerIdx, name }
 
+    const teamColors = ['🟢','🔵','🟡','🟠','🔴','🟣'];
+    const STORAGE_KEY = 'padel_zena_state_v2';
+
+    // ── PERSISTENCE ───────────────────────────────────────────────────────────
     function saveState() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ players, teams, matches, results, tournamentStarted })); } catch(e) {}
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ players, teams, matches, results, tournamentStarted, drawMode, pot1, pot2 })); } catch(e) {}
     }
     function loadState() {
         try {
@@ -656,17 +744,16 @@
             const s = JSON.parse(raw);
             players = s.players || []; teams = s.teams || []; matches = s.matches || [];
             results = s.results || {}; tournamentStarted = s.tournamentStarted || false;
+            drawMode = s.drawMode || 'random'; pot1 = s.pot1 || []; pot2 = s.pot2 || [];
             return true;
         } catch(e) { return false; }
     }
     function restoreUI() {
+        setMode(drawMode, true);
         renderPlayers();
+        renderPotsUI();
         if (teams.length > 0) {
-            document.getElementById('teams-grid').innerHTML = teams.map((t, i) => `
-      <div class="team-card">
-        <div class="team-name"><div class="team-num">${i+1}</div>${t.color} ${t.name}</div>
-        <ul class="team-players">${t.players.map(p => `<li>${p}</li>`).join('')}</ul>
-      </div>`).join('');
+            renderTeamsGrid();
             document.getElementById('section-teams').classList.remove('hidden');
         }
         if (tournamentStarted) {
@@ -678,34 +765,117 @@
         }
     }
 
+    // ── TOAST ─────────────────────────────────────────────────────────────────
     function showToast(msg) {
         const t = document.getElementById('toast');
         t.textContent = msg; t.classList.add('show');
         setTimeout(() => t.classList.remove('show'), 2800);
     }
 
+    // ── PLAYERS ───────────────────────────────────────────────────────────────
     function addPlayer() {
         const input = document.getElementById('player-input');
         const name = input.value.trim();
         if (!name) return;
         if (players.length >= 40) { showToast('Maximum 40 Spieler!'); return; }
         if (players.map(p=>p.toLowerCase()).includes(name.toLowerCase())) { showToast(name + ' bereits eingetragen!'); return; }
-        players.push(name); input.value = ''; renderPlayers(); saveState(); input.focus();
+        players.push(name); input.value = ''; renderPlayers(); renderPotsUI(); saveState(); input.focus();
     }
     document.getElementById('player-input').addEventListener('keydown', e => { if (e.key === 'Enter') addPlayer(); });
-    function removePlayer(idx) { if (tournamentStarted) return; players.splice(idx, 1); renderPlayers(); saveState(); }
-    function renderPlayers() {
-        document.getElementById('player-count').textContent = players.length;
-        document.getElementById('players-grid').innerHTML = players.map((p, i) =>
-            `<div class="player-chip">${p}<button onclick="removePlayer(${i})">✕</button></div>`).join('');
-        document.getElementById('generate-btn').disabled = players.length < 8;
+
+    function removePlayer(idx) {
+        if (tournamentStarted) return;
+        const name = players[idx];
+        pot1 = pot1.filter(p => p !== name);
+        pot2 = pot2.filter(p => p !== name);
+        players.splice(idx, 1);
+        renderPlayers(); renderPotsUI(); saveState();
     }
 
+    function renderPlayers() {
+        document.getElementById('player-count').textContent = players.length;
+        document.getElementById('players-grid').innerHTML = players.map((p, i) => {
+            const inP1 = pot1.includes(p), inP2 = pot2.includes(p);
+            const cls = inP1 ? 'in-pot1' : inP2 ? 'in-pot2' : '';
+            return `<div class="player-chip ${cls}">${p}<button onclick="removePlayer(${i})">✕</button></div>`;
+        }).join('');
+        const enough = players.length >= 8;
+        document.getElementById('generate-btn').disabled = !enough;
+        document.getElementById('generate-pots-btn').disabled = !enough;
+    }
+
+    // ── MODE TOGGLE ───────────────────────────────────────────────────────────
+    function setMode(mode, silent) {
+        drawMode = mode;
+        document.getElementById('mode-random').classList.toggle('active', mode === 'random');
+        document.getElementById('mode-pots').classList.toggle('active', mode === 'pots');
+        document.getElementById('ui-random').classList.toggle('hidden', mode !== 'random');
+        document.getElementById('ui-pots').classList.toggle('hidden', mode !== 'pots');
+        if (!silent) saveState();
+    }
+
+    // ── LOSTÖPFE UI ──────────────────────────────────────────────────────────
+    function renderPotsUI() {
+        const unassigned = players.filter(p => !pot1.includes(p) && !pot2.includes(p));
+
+        // Unassigned pool
+        document.getElementById('unassigned-chips').innerHTML = unassigned.map(p =>
+            `<div class="unassigned-chip" onclick="selectPlayerForPot('${escapeName(p)}')">${p}</div>`
+        ).join('') || '<span style="font-size:13px;color:rgba(255,255,255,0.2);font-style:italic;">Alle Spieler sind einem Topf zugewiesen</span>';
+
+        // Pot 1
+        document.getElementById('pot1-chips').innerHTML = pot1.map(p =>
+            `<div class="pot-chip"><span>${p}</span><button class="pot-chip-remove" onclick="removeFromPot('pot1','${escapeName(p)}')">✕</button></div>`
+        ).join('') || '<span style="font-size:12px;color:rgba(232,185,35,0.3);font-style:italic;">Noch leer</span>';
+        document.getElementById('pot1-count').textContent = pot1.length;
+
+        // Pot 2
+        document.getElementById('pot2-chips').innerHTML = pot2.map(p =>
+            `<div class="pot-chip"><span>${p}</span><button class="pot-chip-remove" onclick="removeFromPot('pot2','${escapeName(p)}')">✕</button></div>`
+        ).join('') || '<span style="font-size:12px;color:rgba(59,130,246,0.3);font-style:italic;">Noch leer</span>';
+        document.getElementById('pot2-count').textContent = pot2.length;
+
+        // Active player actions
+        const actions = document.getElementById('active-player-actions');
+        if (activePlayerForPot) {
+            document.getElementById('active-player-name').textContent = activePlayerForPot;
+            actions.classList.remove('hidden');
+        } else {
+            actions.classList.add('hidden');
+        }
+    }
+
+    function escapeName(name) { return name.replace(/'/g, "\\'"); }
+
+    function selectPlayerForPot(name) {
+        activePlayerForPot = name;
+        renderPotsUI();
+    }
+
+    function assignToGroup(group) {
+        if (!activePlayerForPot) return;
+        pot1 = pot1.filter(p => p !== activePlayerForPot);
+        pot2 = pot2.filter(p => p !== activePlayerForPot);
+        if (group === 'pot1') pot1.push(activePlayerForPot);
+        else if (group === 'pot2') pot2.push(activePlayerForPot);
+        activePlayerForPot = null;
+        renderPlayers(); renderPotsUI(); saveState();
+    }
+
+    function removeFromPot(pot, name) {
+        if (pot === 'pot1') pot1 = pot1.filter(p => p !== name);
+        else pot2 = pot2.filter(p => p !== name);
+        renderPlayers(); renderPotsUI(); saveState();
+    }
+
+    // ── SHUFFLE ───────────────────────────────────────────────────────────────
     function shuffle(arr) {
         const a = [...arr];
         for (let i = a.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
         return a;
     }
+
+    // ── TEAM GENERATION (RANDOM) ──────────────────────────────────────────────
     function generateTeams() {
         if (players.length < 8) { showToast('Mindestens 8 Spieler!'); return; }
         const shuffled = shuffle(players);
@@ -713,27 +883,134 @@
         teams = [];
         for (let i=0; i<numTeams; i++) teams.push({ name:'Team '+(i+1), players:[], color:teamColors[i%teamColors.length] });
         shuffled.forEach((p,i) => teams[i%numTeams].players.push(p));
-        document.getElementById('teams-grid').innerHTML = teams.map((t,i) => `
-    <div class="team-card">
-      <div class="team-name"><div class="team-num">${i+1}</div>${t.color} ${t.name}</div>
-      <ul class="team-players">${t.players.map(p=>`<li>${p}</li>`).join('')}</ul>
-    </div>`).join('');
-        document.getElementById('section-teams').classList.remove('hidden');
-        document.getElementById('section-teams').scrollIntoView({ behavior:'smooth', block:'start' });
-        saveState(); showToast('Teams ausgelost! 🎲');
+        afterTeamsGenerated();
     }
 
-    // --- Fairer Spielplan: klassisches Round-Robin (Kreismethode) + faire Court-Verteilung ---
+    // ── TEAM GENERATION (POTS) ────────────────────────────────────────────────
+    function generateTeamsFromPots() {
+        if (players.length < 8) { showToast('Mindestens 8 Spieler!'); return; }
+        const numTeams = Math.round(players.length / 2);
 
-    // Erzeugt die "logischen" Round-Robin-Runden: in jeder Runde spielt jedes Team höchstens
-    // einmal. Bei ungerader Teamanzahl bekommt pro Runde genau ein Team eine reihum
-    // rotierende Pause, sodass am Ende jedes Team gleich oft pausiert hat.
+        // Shuffle both pots and unassigned
+        const shuffledPot1 = shuffle(pot1);
+        const shuffledPot2 = shuffle(pot2);
+        const unassigned = shuffle(players.filter(p => !pot1.includes(p) && !pot2.includes(p)));
+
+        teams = [];
+        for (let i=0; i<numTeams; i++) teams.push({ name:'Team '+(i+1), players:[], color:teamColors[i%teamColors.length] });
+
+        // Distribute pot1 players as slot 0 (one per team, round-robin)
+        shuffledPot1.forEach((p, i) => { teams[i % numTeams].players[0] = p; });
+
+        // Distribute pot2 players as slot 1 (one per team, starting from next team)
+        const pot2Offset = shuffledPot1.length % numTeams;
+        shuffledPot2.forEach((p, i) => {
+            const teamIdx = (i + pot2Offset) % numTeams;
+            // Find next empty slot in that team
+            if (!teams[teamIdx].players[1]) teams[teamIdx].players[1] = p;
+            else teams[teamIdx].players.push(p);
+        });
+
+        // Fill remaining spots with unassigned players
+        let uIdx = 0;
+        teams.forEach(t => {
+            while (t.players.filter(Boolean).length < 2 && uIdx < unassigned.length) {
+                if (!t.players[1]) t.players[1] = unassigned[uIdx++];
+                else t.players.push(unassigned[uIdx++]);
+            }
+            // Clean up any undefined slots
+            t.players = t.players.filter(Boolean);
+        });
+        // Assign any remaining unassigned players
+        while (uIdx < unassigned.length) {
+            teams[uIdx % numTeams].players.push(unassigned[uIdx++]);
+        }
+
+        afterTeamsGenerated('🎯 Teams aus Töpfen ausgelost!');
+    }
+
+    function afterTeamsGenerated(msg) {
+        renderTeamsGrid();
+        document.getElementById('section-teams').classList.remove('hidden');
+        document.getElementById('section-teams').scrollIntoView({ behavior:'smooth', block:'start' });
+        saveState();
+        showToast(msg || 'Teams ausgelost! 🎲');
+    }
+
+    function regenerateTeams() {
+        if (drawMode === 'pots') generateTeamsFromPots();
+        else generateTeams();
+    }
+
+    function renderTeamsGrid() {
+        document.getElementById('teams-grid').innerHTML = teams.map((t, i) => `
+            <div class="team-card">
+                <div class="team-name"><div class="team-num">${i+1}</div>${t.color} ${t.name}</div>
+                <ul class="team-players">${t.players.map(p => `<li>${p}</li>`).join('')}</ul>
+            </div>`).join('');
+        renderEditorGrid();
+    }
+
+    // ── TEAM EDITOR ───────────────────────────────────────────────────────────
+    function toggleTeamEditor() {
+        const editor = document.getElementById('team-editor');
+        const btn = document.getElementById('edit-teams-toggle');
+        const isHidden = editor.classList.contains('hidden');
+        editor.classList.toggle('hidden', !isHidden);
+        btn.textContent = isHidden ? '✕ Editor schließen' : '✏️ Teams bearbeiten';
+        if (isHidden) renderEditorGrid();
+    }
+
+    function renderEditorGrid() {
+        document.getElementById('editor-teams-grid').innerHTML = teams.map((t, ti) => `
+            <div class="editor-team-card">
+                <div class="editor-team-title">${t.color} ${t.name}</div>
+                ${t.players.map((p, pi) => {
+            const isSelected = swapSelection && swapSelection.teamIdx === ti && swapSelection.playerIdx === pi;
+            const dotClass = pot1.includes(p) ? 'p1' : pot2.includes(p) ? 'p2' : 'none';
+            return `<div class="editor-player ${isSelected ? 'selected' : ''}" onclick="selectForSwap(${ti},${pi},'${escapeName(p)}')">
+                        <span>${p}</span>
+                        <div class="pot-dot ${dotClass}" title="${pot1.includes(p) ? 'Topf 1' : pot2.includes(p) ? 'Topf 2' : 'Kein Topf'}"></div>
+                    </div>`;
+        }).join('')}
+            </div>`).join('');
+
+        const status = document.getElementById('swap-status');
+        if (swapSelection) {
+            status.textContent = `"${swapSelection.name}" ausgewählt — jetzt einen anderen Spieler klicken zum Tauschen.`;
+            status.classList.add('show');
+        } else {
+            status.classList.remove('show');
+        }
+    }
+
+    function selectForSwap(teamIdx, playerIdx, name) {
+        if (!swapSelection) {
+            swapSelection = { teamIdx, playerIdx, name };
+        } else {
+            if (swapSelection.teamIdx === teamIdx && swapSelection.playerIdx === playerIdx) {
+                swapSelection = null; // deselect same
+            } else {
+                // Do the swap
+                const a = swapSelection, b = { teamIdx, playerIdx, name };
+                const tmp = teams[a.teamIdx].players[a.playerIdx];
+                teams[a.teamIdx].players[a.playerIdx] = teams[b.teamIdx].players[b.playerIdx];
+                teams[b.teamIdx].players[b.playerIdx] = tmp;
+                swapSelection = null;
+                showToast(`✅ "${a.name}" und "${b.name}" getauscht!`);
+                renderTeamsGrid(); saveState(); return;
+            }
+        }
+        renderEditorGrid();
+    }
+
+    function clearSwapSelection() { swapSelection = null; renderEditorGrid(); }
+
+    // ── ROUND-ROBIN SCHEDULER ─────────────────────────────────────────────────
     function roundRobinRounds(n) {
         let arr = [...Array(n).keys()];
-        if (n % 2 !== 0) arr.push(-1); // -1 = Pause/Bye
-        const m = arr.length;
-        const totalRounds = m - 1;
-        const half = m / 2;
+        if (n % 2 !== 0) arr.push(-1);
+        const m = arr.length, totalRounds = m - 1, half = m / 2;
         const rounds = [];
         for (let r = 0; r < totalRounds; r++) {
             const round = [];
@@ -742,33 +1019,25 @@
                 if (a !== -1 && b !== -1) round.push([a, b]);
             }
             rounds.push(round);
-            const fixed = arr[0];
-            const rest = arr.slice(1);
+            const fixed = arr[0], rest = arr.slice(1);
             rest.unshift(rest.pop());
             arr = [fixed, ...rest];
         }
         return rounds;
     }
 
-    // Verteilt die Paarungen (in Round-Robin-Reihenfolge) auf Zeit-Slots mit je `numCourts`
-    // gleichzeitigen Spielen. Innerhalb eines Slots darf kein Team doppelt vorkommen.
-    // Dadurch sind beide Courts so oft wie möglich gleichzeitig belegt, und kein Team
-    // muss mehrere Spiele in Folge bestreiten, während andere pausieren.
     function packIntoSlots(rounds, numCourts) {
         const queue = [];
         rounds.forEach((round, ri) => round.forEach(pair => queue.push({ pair, ri })));
         const slots = [];
         while (queue.length) {
-            const slot = [];
-            const used = new Set();
+            const slot = [], used = new Set();
             for (let i = 0; i < queue.length && slot.length < numCourts; i++) {
                 const item = queue[i];
                 if (used.has(item.pair[0]) || used.has(item.pair[1])) continue;
-                slot.push(item);
-                used.add(item.pair[0]);
-                used.add(item.pair[1]);
+                slot.push(item); used.add(item.pair[0]); used.add(item.pair[1]);
             }
-            slot.forEach(item => { const idx = queue.indexOf(item); queue.splice(idx, 1); });
+            slot.forEach(item => { queue.splice(queue.indexOf(item), 1); });
             slots.push(slot);
         }
         return slots;
@@ -782,7 +1051,7 @@
         slots.forEach((slot, si) => {
             slot.forEach((item, ci) => {
                 const [a, b] = item.pair;
-                matches.push({ id:`g_${a}_${b}`, team1:a, team2:b, court: ci+1, roundNum: si+1, phase:'Gruppenphase', ko:false });
+                matches.push({ id:`g_${a}_${b}`, team1:a, team2:b, court:ci+1, roundNum:si+1, phase:'Gruppenphase', ko:false });
             });
         });
         matches.push({ id:'hf1', team1:null, team2:null, court:1, phase:'Halbfinale', ko:true, label:'Halbfinale 1 · 1. vs. 4.' });
@@ -802,6 +1071,7 @@
         saveState(); showToast('Turnier gestartet! 🏆');
     }
 
+    // ── STANDINGS ─────────────────────────────────────────────────────────────
     function getStandings() {
         const table = teams.map((t,i) => ({ idx:i, name:t.name, color:t.color, played:0, won:0, lost:0, gFor:0, gAgainst:0, pts:0 }));
         matches.filter(m=>!m.ko).forEach(m => {
@@ -818,18 +1088,16 @@
     function renderStandings() {
         const standings = getStandings();
         document.getElementById('standings-body').innerHTML = standings.map((t,i) => {
-            const posClass = i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-other';
             const dif = t.gFor - t.gAgainst;
-            const difClass = dif>0?'dif-pos':dif<0?'dif-neg':'dif-zero';
             const difStr = dif>0?'+'+dif:String(dif);
             return `<tr>
-      <td><div class="standing-pos ${posClass}">${i+1}</div></td>
-      <td><span class="team-name-cell">${t.color} ${t.name}</span></td>
-      <td>${t.played}</td><td>${t.won}</td><td>${t.lost}</td>
-      <td class="games-cell">${t.gFor}:${t.gAgainst}</td>
-      <td class="${difClass}">${difStr}</td>
-      <td class="pts-cell">${t.pts}</td>
-    </tr>`;
+                <td><div class="standing-pos">${i+1}</div></td>
+                <td><span class="team-name-cell">${t.color} ${t.name}</span></td>
+                <td>${t.played}</td><td>${t.won}</td><td>${t.lost}</td>
+                <td>${t.gFor}:${t.gAgainst}</td>
+                <td>${difStr}</td>
+                <td class="pts-cell">${t.pts}</td>
+            </tr>`;
         }).join('');
         return standings;
     }
@@ -851,6 +1119,7 @@
         return teams[idx]?teams[idx].color+' '+teams[idx].name:'?';
     }
 
+    // ── MATCH CARDS ───────────────────────────────────────────────────────────
     function renderMatchCard(m, extraClass) {
         const r=results[m.id], winner=r?r.winner:null;
         const w1=winner===m.team1, w2=winner===m.team2;
@@ -858,17 +1127,17 @@
         let html=`<div class="match-card ${extraClass||''}" id="mc_${m.id}">`;
         if (m.ko&&m.label) html+=`<div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;">${m.label}</div>`;
         html+=`<div class="match-teams">
-    <div class="match-team ${w1?'is-winner':''}" onclick="prefillScore('${m.id}',1)">${getTeamName(m.team1)}<span class="match-team-hint">klicken → 6</span></div>
-    <div class="match-vs">vs</div>
-    <div class="match-team ${w2?'is-winner':''}" onclick="prefillScore('${m.id}',2)">${getTeamName(m.team2)}<span class="match-team-hint">klicken → 6</span></div>
-  </div>`;
+            <div class="match-team ${w1?'is-winner':''}" onclick="prefillScore('${m.id}',1)">${getTeamName(m.team1)}<span class="match-team-hint">klicken → 6</span></div>
+            <div class="match-vs">vs</div>
+            <div class="match-team ${w2?'is-winner':''}" onclick="prefillScore('${m.id}',2)">${getTeamName(m.team2)}<span class="match-team-hint">klicken → 6</span></div>
+        </div>`;
         if (canPlay) {
             html+=`<div class="match-result">
-      <input class="score-input" type="number" min="0" max="6" value="${r?r.score1:''}" placeholder="–" id="s1_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})">
-      <div class="score-sep">:</div>
-      <input class="score-input" type="number" min="0" max="6" value="${r?r.score2:''}" placeholder="–" id="s2_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})">
-      <button class="btn btn-green save-match-btn" onclick="saveScore('${m.id}',${m.team1},${m.team2})">✓</button>
-    </div>`;
+                <input class="score-input" type="number" min="0" max="6" value="${r?r.score1:''}" placeholder="–" id="s1_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})">
+                <div class="score-sep">:</div>
+                <input class="score-input" type="number" min="0" max="6" value="${r?r.score2:''}" placeholder="–" id="s2_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})">
+                <button class="btn btn-green save-match-btn" onclick="saveScore('${m.id}',${m.team1},${m.team2})">✓</button>
+            </div>`;
             if (r) html+=`<div class="match-winner-badge">🏆 ${getTeamName(winner)}</div>`;
         } else {
             html+=`<div style="font-size:13px;color:rgba(255,255,255,0.3);font-style:italic;margin-top:4px;">Wird nach Gruppenphase besetzt</div>`;
@@ -885,22 +1154,22 @@
         Object.keys(rounds).sort((a,b)=>a-b).forEach(rn=>{
             const rms=rounds[rn], byC1=rms.find(m=>m.court===1), byC2=rms.find(m=>m.court===2);
             html+=`<div class="round-block"><div class="round-label">Runde ${rn}</div><div class="court-columns">
-      <div><div class="court-col-header">Court 1</div>${byC1?renderMatchCard(byC1):'<div style="padding:12px;font-size:13px;color:rgba(255,255,255,0.2);font-style:italic;">Pause</div>'}</div>
-      <div><div class="court-col-header">Court 2</div>${byC2?renderMatchCard(byC2):'<div style="padding:12px;font-size:13px;color:rgba(255,255,255,0.2);font-style:italic;">Pause</div>'}</div>
-    </div></div>`;
+                <div><div class="court-col-header">Court 1</div>${byC1?renderMatchCard(byC1):'<div style="padding:12px;font-size:13px;color:rgba(255,255,255,0.2);font-style:italic;">Pause</div>'}</div>
+                <div><div class="court-col-header">Court 2</div>${byC2?renderMatchCard(byC2):'<div style="padding:12px;font-size:13px;color:rgba(255,255,255,0.2);font-style:italic;">Pause</div>'}</div>
+            </div></div>`;
         });
         const hf=matches.filter(m=>m.ko&&m.phase==='Halbfinale'), fin=matches.find(m=>m.ko&&m.phase==='Finale');
         html+=`<div class="ko-section">
-    <div class="round-label">Halbfinale <span class="ko-badge ko-halbfinale">KO-Runde</span></div>
-    <div class="court-columns">
-      <div><div class="court-col-header">Court 1</div>${hf[0]?renderMatchCard(hf[0],'ko-match-card'):''}</div>
-      <div><div class="court-col-header">Court 2</div>${hf[1]?renderMatchCard(hf[1],'ko-match-card'):''}</div>
-    </div>
-    <div style="margin-top:16px;">
-      <div class="round-label">Finale <span class="ko-badge ko-finale">FINALE</span></div>
-      ${fin?renderMatchCard(fin,'ko-match-card finale-card'):''}
-    </div>
-  </div>`;
+            <div class="round-label">Halbfinale <span class="ko-badge ko-halbfinale">KO-Runde</span></div>
+            <div class="court-columns">
+                <div><div class="court-col-header">Court 1</div>${hf[0]?renderMatchCard(hf[0],'ko-match-card'):''}</div>
+                <div><div class="court-col-header">Court 2</div>${hf[1]?renderMatchCard(hf[1],'ko-match-card'):''}</div>
+            </div>
+            <div style="margin-top:16px;">
+                <div class="round-label">Finale <span class="ko-badge ko-finale">FINALE</span></div>
+                ${fin?renderMatchCard(fin,'ko-match-card finale-card'):''}
+            </div>
+        </div>`;
         container.innerHTML=html;
         const phaseText=document.getElementById('phase-text');
         if (results['final']) phaseText.textContent='🏆 Turnier abgeschlossen!';
@@ -926,11 +1195,13 @@
     }
     function renderAll() { renderStandings(); renderSchedule(); }
 
+    // ── RESET ─────────────────────────────────────────────────────────────────
     function resetAll() {
         if (tournamentStarted&&!confirm('Wirklich alles zurücksetzen?')) return;
-        players=[]; teams=[]; matches=[]; results={}; tournamentStarted=false;
+        players=[]; teams=[]; matches=[]; results={}; tournamentStarted=false; pot1=[]; pot2=[];
+        activePlayerForPot=null; swapSelection=null;
         try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
-        renderPlayers();
+        renderPlayers(); renderPotsUI();
         document.getElementById('section-teams').classList.add('hidden');
         document.getElementById('section-table').classList.add('hidden');
         document.getElementById('section-schedule').classList.add('hidden');
@@ -939,7 +1210,9 @@
         showToast('Alles zurückgesetzt!');
     }
 
+    // ── INIT ──────────────────────────────────────────────────────────────────
     if (loadState()) restoreUI();
+    else { setMode('random', true); renderPotsUI(); }
 </script>
 </body>
 </html>
