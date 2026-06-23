@@ -124,8 +124,7 @@
         .btn-outline:hover { border-color: var(--green-mid); color: var(--green-mid); }
         .btn-gold { background: var(--gold); color: #111; }
         .btn-gold:hover { background: #d4a91e; }
-        .btn-blue { background: var(--blue); color: #fff; }
-        .btn-blue:hover { background: var(--blue-dark); }
+
         .btn-sm { padding: 7px 14px; font-size: 13px; }
         .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
@@ -136,8 +135,7 @@
             padding: 8px 16px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.85);
             cursor: default;
         }
-        .player-chip.in-pot1 { border-color: var(--gold); background: rgba(232,185,35,0.08); }
-        .player-chip.in-pot2 { border-color: var(--blue); background: rgba(59,130,246,0.08); }
+
         .player-chip button {
             background: none; border: none; color: rgba(255,255,255,0.3);
             cursor: pointer; font-size: 16px; line-height: 1; padding: 0; transition: color 0.15s;
@@ -217,14 +215,7 @@
             user-select: none;
         }
         .unassigned-chip:hover { border-color: rgba(255,255,255,0.3); color: #fff; background: rgba(255,255,255,0.07); }
-        .unassigned-chip.selected { border-color: var(--green-mid); color: var(--green-mid); background: rgba(46,201,122,0.1); }
-        .unassigned-chip.dragging { opacity: 0.4; cursor: grabbing; }
 
-        .pot-box.drag-over { border-color: rgba(255,255,255,0.5) !important; background: rgba(255,255,255,0.04); }
-        .pot-box.pot1.drag-over { border-color: var(--gold) !important; background: rgba(232,185,35,0.06); }
-        .pot-box.pot2.drag-over { border-color: var(--blue) !important; background: rgba(59,130,246,0.06); }
-
-        .pot-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
         .pot-action-btn {
             padding: 6px 14px; border-radius: 7px; font-size: 12px; font-weight: 600;
             font-family: 'Inter', sans-serif; cursor: pointer; border: 1px solid transparent;
@@ -244,7 +235,7 @@
             background: rgba(46,201,122,0.06); border: 1px solid rgba(46,201,122,0.15);
             border-radius: 10px; padding: 12px 16px; margin-bottom: 12px;
         }
-        .bulk-actions.show { display: flex; }
+
         .bulk-actions-label { font-size: 13px; color: var(--green-mid); font-weight: 600; flex-shrink: 0; }
         .bulk-clear-btn {
             background: none; border: none; color: rgba(255,255,255,0.35); cursor: pointer;
@@ -333,22 +324,16 @@
         }
         .editor-player:last-child { margin-bottom: 0; }
         .editor-player:hover { border-color: var(--gold); color: var(--gold); background: rgba(232,185,35,0.06); }
-        .editor-player.selected {
-            border-color: var(--gold); background: rgba(232,185,35,0.12); color: var(--gold);
-        }
+
         .editor-player .pot-dot {
             width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
         }
-        .editor-player .pot-dot.p1 { background: var(--gold); }
-        .editor-player .pot-dot.p2 { background: var(--blue); }
-        .editor-player .pot-dot.none { background: rgba(255,255,255,0.15); }
 
         .swap-status {
             background: rgba(232,185,35,0.08); border: 1px solid rgba(232,185,35,0.2);
             border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--gold);
             margin-bottom: 12px; display: none;
         }
-        .swap-status.show { display: block; }
 
         /* ── TABLE SECTION ── */
         .table-section { background: #111; }
@@ -375,14 +360,7 @@
         .team-name-cell { font-weight: 600; color: #fff; }
         .pts-cell { font-weight: 700; color: var(--green-mid); font-size: 16px; }
 
-        .pos-1 { background: var(--gold-dark); color: var(--gold-light); }
-        .pos-2 { background: #2a2a2a; color: rgba(255,255,255,0.6); }
-        .pos-3 { background: #1e2a1e; color: var(--green-mid); }
-        .pos-other { background: transparent; color: rgba(255,255,255,0.3); }
         .games-cell { font-variant-numeric: tabular-nums; }
-        .dif-pos { color: var(--green-mid); font-weight: 600; }
-        .dif-neg { color: #e74c3c; font-weight: 600; }
-        .dif-zero { color: rgba(255,255,255,0.4); }
 
         /* ── SCHEDULE SECTION ── */
         .schedule-section { background: var(--black); }
@@ -493,7 +471,6 @@
             font-size: 14px; font-weight: 500; z-index: 9999;
             opacity: 0; transform: translateY(10px); transition: all 0.25s; pointer-events: none;
         }
-        .toast.show { opacity: 1; transform: translateY(0); }
 
         .hidden { display: none !important; }
         .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 0; }
