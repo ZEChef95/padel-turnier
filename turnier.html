@@ -211,11 +211,18 @@
         .unassigned-chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 36px; }
         .unassigned-chip {
             display: inline-flex; align-items: center; gap: 6px;
-            background: #222; border: 1px solid rgba(255,255,255,0.1);
+            background: #222; border: 2px solid rgba(255,255,255,0.1);
             border-radius: 100px; padding: 6px 12px; font-size: 13px;
-            color: rgba(255,255,255,0.7); cursor: pointer; transition: all 0.15s;
+            color: rgba(255,255,255,0.7); cursor: grab; transition: all 0.15s;
+            user-select: none;
         }
-        .unassigned-chip:hover { border-color: var(--green-mid); color: var(--green-mid); background: rgba(46,201,122,0.07); }
+        .unassigned-chip:hover { border-color: rgba(255,255,255,0.3); color: #fff; background: rgba(255,255,255,0.07); }
+        .unassigned-chip.selected { border-color: var(--green-mid); color: var(--green-mid); background: rgba(46,201,122,0.1); }
+        .unassigned-chip.dragging { opacity: 0.4; cursor: grabbing; }
+
+        .pot-box.drag-over { border-color: rgba(255,255,255,0.5) !important; background: rgba(255,255,255,0.04); }
+        .pot-box.pot1.drag-over { border-color: var(--gold) !important; background: rgba(232,185,35,0.06); }
+        .pot-box.pot2.drag-over { border-color: var(--blue) !important; background: rgba(59,130,246,0.06); }
 
         .pot-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
         .pot-action-btn {
@@ -231,6 +238,19 @@
             background: rgba(59,130,246,0.1); color: #93c5fd; border-color: rgba(59,130,246,0.2);
         }
         .pot-action-btn.to-pot2:hover { background: rgba(59,130,246,0.2); }
+
+        .bulk-actions {
+            display: none; align-items: center; gap: 10px; flex-wrap: wrap;
+            background: rgba(46,201,122,0.06); border: 1px solid rgba(46,201,122,0.15);
+            border-radius: 10px; padding: 12px 16px; margin-bottom: 12px;
+        }
+        .bulk-actions.show { display: flex; }
+        .bulk-actions-label { font-size: 13px; color: var(--green-mid); font-weight: 600; flex-shrink: 0; }
+        .bulk-clear-btn {
+            background: none; border: none; color: rgba(255,255,255,0.35); cursor: pointer;
+            font-size: 13px; font-family: 'Inter', sans-serif; padding: 0; transition: color 0.15s; margin-left: auto;
+        }
+        .bulk-clear-btn:hover { color: #e74c3c; }
 
         .pot-info-box {
             background: rgba(46,201,122,0.05); border: 1px solid rgba(46,201,122,0.12);
@@ -354,6 +374,15 @@
         }
         .team-name-cell { font-weight: 600; color: #fff; }
         .pts-cell { font-weight: 700; color: var(--green-mid); font-size: 16px; }
+
+        .pos-1 { background: var(--gold-dark); color: var(--gold-light); }
+        .pos-2 { background: #2a2a2a; color: rgba(255,255,255,0.6); }
+        .pos-3 { background: #1e2a1e; color: var(--green-mid); }
+        .pos-other { background: transparent; color: rgba(255,255,255,0.3); }
+        .games-cell { font-variant-numeric: tabular-nums; }
+        .dif-pos { color: var(--green-mid); font-weight: 600; }
+        .dif-neg { color: #e74c3c; font-weight: 600; }
+        .dif-zero { color: rgba(255,255,255,0.4); }
 
         /* ── SCHEDULE SECTION ── */
         .schedule-section { background: var(--black); }
@@ -570,8 +599,16 @@
             </div>
 
             <div class="unassigned-pool" id="unassigned-pool">
-                <div class="unassigned-label">Nicht zugewiesen – klicken zum Zuordnen</div>
+                <div class="unassigned-label">Nicht zugewiesen — anklicken (Mehrfach möglich) oder in Topf ziehen</div>
                 <div class="unassigned-chips" id="unassigned-chips"></div>
+            </div>
+
+            <!-- Bulk action bar (shown when ≥1 selected) -->
+            <div class="bulk-actions" id="bulk-actions">
+                <span class="bulk-actions-label" id="bulk-label">0 ausgewählt</span>
+                <button class="pot-action-btn to-pot1" onclick="assignSelectionToGroup('pot1')">⭐ → Topf 1</button>
+                <button class="pot-action-btn to-pot2" onclick="assignSelectionToGroup('pot2')">🔵 → Topf 2</button>
+                <button class="bulk-clear-btn" onclick="clearPotSelection()">✕ Auswahl aufheben</button>
             </div>
 
             <div class="pots-container">
@@ -590,17 +627,6 @@
                     </div>
                     <div class="pot-desc">Werden als Spieler 2 zugelost</div>
                     <div class="pot-chips" id="pot2-chips"></div>
-                </div>
-            </div>
-
-            <div id="active-player-actions" class="hidden" style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;margin-bottom:16px;">
-                <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:10px;">
-                    Spieler: <strong id="active-player-name" style="color:#fff;"></strong> zuordnen zu:
-                </div>
-                <div class="pot-actions">
-                    <button class="pot-action-btn to-pot1" onclick="assignToGroup('pot1')">⭐ Topf 1</button>
-                    <button class="pot-action-btn to-pot2" onclick="assignToGroup('pot2')">🔵 Topf 2</button>
-                    <button class="pot-action-btn" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);border-color:rgba(255,255,255,0.1);" onclick="assignToGroup(null)">✕ Keinem Topf</button>
                 </div>
             </div>
 
@@ -687,7 +713,7 @@
             <div class="rule-card"><div class="rule-icon">🏅</div><div class="rule-title">Games zum Sieg</div><div class="rule-value">6 Games</div></div>
         </div>
         <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:24px;">
-            <h3 style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Erklärung</h3>
+            <h3 style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Erkärung</h3>
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
                 <strong style="color:#fff;">Modus:</strong> Jeder gegen jeden <strong style="color:var(--green-mid);">(Gruppenphase)</strong> → Halbfinale: 1. vs. 4. und 2. vs. 3. → Finale.
             </p>
@@ -704,8 +730,26 @@
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
                 <strong style="color:#fff;">Sieger:</strong> Gespielt wird bis ein Team 6 Games gewonnen hat <strong style="color:var(--green-mid);">(1 Satz)</strong>.
             </p>
+            <div class="score-seq">
+                <div class="score-ball">Game1</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game2</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game3</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game4</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball">Game5</div>
+                <div class="score-arrow">→</div>
+                <div class="score-ball active">Satz</div>
+                <div class="score-arrow">=</div>
+                <div class="score-ball win">Sieger</div>
+            </div>
             <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
-                <strong style="color:#fff;">Tabelle:</strong> Bei Punktegleichstand entscheidet die <strong style="color:var(--green-mid);">Game-Differenz (DIF)</strong>.
+                <strong style="color:#fff;">Einstand:</strong> Bei <strong style="color:var(--green-mid);">40:40 (Einstand)</strong> wird mit <strong style="color:var(--green-mid);">Golden Point</strong> gespielt — der nächste Punkt entscheidet das Game.
+            </p>
+            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+                <strong style="color:#fff;">Tabelle:</strong> Bei Punktegleichstand entscheidet die <strong style="color:var(--green-mid);">Game-Differenz (DIF)</strong> — also die Summe aller gewonnenen minus aller verlorenen Games über alle Spiele.
             </p>
         </div>
         <div class="video-wrapper">
@@ -726,7 +770,7 @@
     let tournamentStarted = false;
     let drawMode = 'random'; // 'random' | 'pots'
     let pot1 = [], pot2 = []; // player names in each pot
-    let activePlayerForPot = null; // name of player being assigned
+    let potSelection = new Set(); // names currently selected in unassigned pool
     // Team editor swap
     let swapSelection = null; // { teamIdx, playerIdx, name }
 
@@ -745,6 +789,7 @@
             players = s.players || []; teams = s.teams || []; matches = s.matches || [];
             results = s.results || {}; tournamentStarted = s.tournamentStarted || false;
             drawMode = s.drawMode || 'random'; pot1 = s.pot1 || []; pot2 = s.pot2 || [];
+            potSelection = new Set();
             return true;
         } catch(e) { return false; }
     }
@@ -818,47 +863,66 @@
     function renderPotsUI() {
         const unassigned = players.filter(p => !pot1.includes(p) && !pot2.includes(p));
 
-        // Unassigned pool
-        document.getElementById('unassigned-chips').innerHTML = unassigned.map(p =>
-            `<div class="unassigned-chip" onclick="selectPlayerForPot('${escapeName(p)}')">${p}</div>`
-        ).join('') || '<span style="font-size:13px;color:rgba(255,255,255,0.2);font-style:italic;">Alle Spieler sind einem Topf zugewiesen</span>';
+        // Unassigned pool with multi-select + drag
+        if (unassigned.length === 0) {
+            document.getElementById('unassigned-chips').innerHTML = '<span style="font-size:13px;color:rgba(255,255,255,0.2);font-style:italic;">Alle Spieler sind einem Topf zugewiesen</span>';
+        } else {
+            document.getElementById('unassigned-chips').innerHTML = unassigned.map(p => {
+                const sel = potSelection.has(p) ? 'selected' : '';
+                return `<div class="unassigned-chip ${sel}" draggable="true"
+                    onclick="togglePotSelection('${escapeName(p)}')"
+                    ondragstart="onChipDragStart(event,'${escapeName(p)}')"
+                    ondragend="onChipDragEnd(event)"
+                >${p}</div>`;
+            }).join('');
+        }
+
+        // Bulk action bar
+        const bulkBar = document.getElementById('bulk-actions');
+        const selCount = potSelection.size;
+        if (selCount > 0) {
+            bulkBar.classList.add('show');
+            document.getElementById('bulk-label').textContent = `${selCount} ausgewählt`;
+        } else {
+            bulkBar.classList.remove('show');
+        }
 
         // Pot 1
         document.getElementById('pot1-chips').innerHTML = pot1.map(p =>
             `<div class="pot-chip"><span>${p}</span><button class="pot-chip-remove" onclick="removeFromPot('pot1','${escapeName(p)}')">✕</button></div>`
-        ).join('') || '<span style="font-size:12px;color:rgba(232,185,35,0.3);font-style:italic;">Noch leer</span>';
+        ).join('') || '<span style="font-size:12px;color:rgba(232,185,35,0.3);font-style:italic;">Hierher ziehen oder auswählen</span>';
         document.getElementById('pot1-count').textContent = pot1.length;
 
         // Pot 2
         document.getElementById('pot2-chips').innerHTML = pot2.map(p =>
             `<div class="pot-chip"><span>${p}</span><button class="pot-chip-remove" onclick="removeFromPot('pot2','${escapeName(p)}')">✕</button></div>`
-        ).join('') || '<span style="font-size:12px;color:rgba(59,130,246,0.3);font-style:italic;">Noch leer</span>';
+        ).join('') || '<span style="font-size:12px;color:rgba(59,130,246,0.3);font-style:italic;">Hierher ziehen oder auswählen</span>';
         document.getElementById('pot2-count').textContent = pot2.length;
 
-        // Active player actions
-        const actions = document.getElementById('active-player-actions');
-        if (activePlayerForPot) {
-            document.getElementById('active-player-name').textContent = activePlayerForPot;
-            actions.classList.remove('hidden');
-        } else {
-            actions.classList.add('hidden');
-        }
+        // Setup drag-drop targets
+        setupDropTargets();
     }
 
     function escapeName(name) { return name.replace(/'/g, "\\'"); }
 
-    function selectPlayerForPot(name) {
-        activePlayerForPot = name;
+    // Multi-select toggle
+    function togglePotSelection(name) {
+        if (potSelection.has(name)) potSelection.delete(name);
+        else potSelection.add(name);
         renderPotsUI();
     }
 
-    function assignToGroup(group) {
-        if (!activePlayerForPot) return;
-        pot1 = pot1.filter(p => p !== activePlayerForPot);
-        pot2 = pot2.filter(p => p !== activePlayerForPot);
-        if (group === 'pot1') pot1.push(activePlayerForPot);
-        else if (group === 'pot2') pot2.push(activePlayerForPot);
-        activePlayerForPot = null;
+    function clearPotSelection() { potSelection.clear(); renderPotsUI(); }
+
+    // Assign entire selection to a group
+    function assignSelectionToGroup(group) {
+        potSelection.forEach(name => {
+            pot1 = pot1.filter(p => p !== name);
+            pot2 = pot2.filter(p => p !== name);
+            if (group === 'pot1') pot1.push(name);
+            else if (group === 'pot2') pot2.push(name);
+        });
+        potSelection.clear();
         renderPlayers(); renderPotsUI(); saveState();
     }
 
@@ -866,6 +930,49 @@
         if (pot === 'pot1') pot1 = pot1.filter(p => p !== name);
         else pot2 = pot2.filter(p => p !== name);
         renderPlayers(); renderPotsUI(); saveState();
+    }
+
+    // ── DRAG & DROP ───────────────────────────────────────────────────────────
+    let draggedName = null;
+
+    function onChipDragStart(e, name) {
+        draggedName = name;
+        e.dataTransfer.effectAllowed = 'move';
+        e.target.classList.add('dragging');
+        // If dragging a non-selected chip, temporarily treat it as a single-item drag
+        if (!potSelection.has(name)) {
+            potSelection.clear();
+            potSelection.add(name);
+            // Re-render after a tick so the drag image captures the element first
+            setTimeout(() => renderPotsUI(), 0);
+        }
+    }
+
+    function onChipDragEnd(e) {
+        e.target.classList.remove('dragging');
+        draggedName = null;
+    }
+
+    function setupDropTargets() {
+        ['pot1-box', 'pot2-box'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.ondragover = e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; el.classList.add('drag-over'); };
+            el.ondragleave = () => el.classList.remove('drag-over');
+            el.ondrop = e => {
+                e.preventDefault();
+                el.classList.remove('drag-over');
+                const target = id === 'pot1-box' ? 'pot1' : 'pot2';
+                if (potSelection.size > 0) assignSelectionToGroup(target);
+                else if (draggedName) {
+                    pot1 = pot1.filter(p => p !== draggedName);
+                    pot2 = pot2.filter(p => p !== draggedName);
+                    if (target === 'pot1') pot1.push(draggedName);
+                    else pot2.push(draggedName);
+                    renderPlayers(); renderPotsUI(); saveState();
+                }
+            };
+        });
     }
 
     // ── SHUFFLE ───────────────────────────────────────────────────────────────
@@ -1088,16 +1195,18 @@
     function renderStandings() {
         const standings = getStandings();
         document.getElementById('standings-body').innerHTML = standings.map((t,i) => {
+            const posClass = i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-other';
             const dif = t.gFor - t.gAgainst;
+            const difClass = dif>0?'dif-pos':dif<0?'dif-neg':'dif-zero';
             const difStr = dif>0?'+'+dif:String(dif);
             return `<tr>
-                <td><div class="standing-pos">${i+1}</div></td>
-                <td><span class="team-name-cell">${t.color} ${t.name}</span></td>
-                <td>${t.played}</td><td>${t.won}</td><td>${t.lost}</td>
-                <td>${t.gFor}:${t.gAgainst}</td>
-                <td>${difStr}</td>
-                <td class="pts-cell">${t.pts}</td>
-            </tr>`;
+      <td><div class="standing-pos ${posClass}">${i+1}</div></td>
+      <td><span class="team-name-cell">${t.color} ${t.name}</span></td>
+      <td>${t.played}</td><td>${t.won}</td><td>${t.lost}</td>
+      <td class="games-cell">${t.gFor}:${t.gAgainst}</td>
+      <td class="${difClass}">${difStr}</td>
+      <td class="pts-cell">${t.pts}</td>
+    </tr>`;
         }).join('');
         return standings;
     }
@@ -1199,7 +1308,7 @@
     function resetAll() {
         if (tournamentStarted&&!confirm('Wirklich alles zurücksetzen?')) return;
         players=[]; teams=[]; matches=[]; results={}; tournamentStarted=false; pot1=[]; pot2=[];
-        activePlayerForPot=null; swapSelection=null;
+        potSelection=new Set(); swapSelection=null;
         try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
         renderPlayers(); renderPotsUI();
         document.getElementById('section-teams').classList.add('hidden');
@@ -1212,7 +1321,7 @@
 
     // ── INIT ──────────────────────────────────────────────────────────────────
     if (loadState()) restoreUI();
-    else { setMode('random', true); renderPotsUI(); }
+    else { setMode('random', true); renderPotsUI(); setupDropTargets(); }
 </script>
 </body>
 </html>
