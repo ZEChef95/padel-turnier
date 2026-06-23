@@ -89,7 +89,6 @@
             letter-spacing: 1px; margin-bottom: 32px; color: var(--white);
         }
 
-        .story-section { background: #111; }
         .story-card {
             background: #1a1a1a; border: 1px solid rgba(255,255,255,0.07);
             border-radius: var(--radius); padding: 32px; display: flex; gap: 24px; align-items: flex-start;
@@ -492,6 +491,72 @@
         }
         .tip-text span { color: var(--green-mid); }
 
+        /* ── CLICKABLE RULE CARDS ── */
+        .rule-card-clickable { cursor: pointer; position: relative; transition: border-color 0.2s, transform 0.15s; }
+        .rule-card-clickable:hover { border-color: rgba(46,201,122,0.5); transform: translateY(-2px); }
+        .rule-edit-hint {
+            font-size: 11px; color: rgba(46,201,122,0.5); margin-top: 6px;
+            letter-spacing: 1px; text-transform: uppercase; font-weight: 600;
+        }
+        .rule-card-clickable:hover .rule-edit-hint { color: var(--green-mid); }
+
+        /* ── RULE POPUP OVERLAY ── */
+        .rule-popup-overlay {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            align-items: center; justify-content: center;
+        }
+        .rule-popup-overlay.open { display: flex; }
+        .rule-popup {
+            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px; padding: 28px; min-width: 280px; max-width: 360px; width: 90%;
+            position: relative;
+        }
+        .rule-popup-title {
+            font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--green-mid); margin-bottom: 20px;
+        }
+        .rule-popup-close {
+            position: absolute; top: 14px; right: 16px;
+            background: none; border: none; color: rgba(255,255,255,0.4);
+            font-size: 20px; cursor: pointer; line-height: 1; padding: 0;
+        }
+        .rule-popup-close:hover { color: #fff; }
+        .rule-option-btn {
+            display: block; width: 100%; text-align: left; padding: 14px 18px;
+            background: #222; border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 10px; color: rgba(255,255,255,0.75); font-size: 15px;
+            font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer;
+            margin-bottom: 10px; transition: all 0.15s;
+        }
+        .rule-option-btn:hover { border-color: var(--green-mid); color: #fff; background: rgba(46,201,122,0.08); }
+        .rule-option-btn.selected { border-color: var(--green-mid); background: rgba(46,201,122,0.12); color: #fff; }
+        .rule-option-btn .opt-label { font-size: 12px; color: rgba(255,255,255,0.35); display: block; margin-top: 3px; }
+
+        /* ── HERO EDIT POPUP ── */
+        .hero-edit-popup {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            align-items: center; justify-content: center;
+        }
+        .hero-edit-popup.open { display: flex; }
+        .hero-edit-box {
+            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px; padding: 28px; min-width: 300px; max-width: 420px; width: 90%;
+            position: relative;
+        }
+        .hero-edit-title {
+            font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--green-mid); margin-bottom: 16px;
+        }
+        .hero-edit-input {
+            width: 100%; background: #111; border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px; color: #fff; font-size: 15px; font-family: 'Inter', sans-serif;
+            padding: 12px 14px; outline: none; margin-bottom: 16px; transition: border-color 0.2s;
+        }
+        .hero-edit-input:focus { border-color: var(--green-mid); }
+        .hero-edit-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
         @media (max-width: 480px) {
             section { padding: 44px 16px; }
             .hero-inner { padding: 48px 16px 100px; }
@@ -511,33 +576,21 @@
 <div class="hero">
     <div class="hero-court-lines"></div>
     <div class="hero-inner">
-        <div class="hero-eyebrow">⚡ Ausstand-Turnier · Tomaselli Gabriel</div>
-        <h1 class="hero-title">Padel<br><span>Ausstand</span><br>ZENA</h1>
-        <p class="hero-subtitle">Farewell — Nathanael Zech</p>
+        <div class="hero-eyebrow">⚡ Padel-Turnier ⚡</div>
+        <h1 class="hero-title">Padel<br><span>Turnier</span><br>ZENA</h1>
+        <p class="hero-subtitle">Host — Nathanael Zech</p>
         <div class="hero-date">
-            <span>📅 23. Juni 2026</span>
+            <span id="hero-date-text" onclick="editHeroField('date')" title="Klicken zum Bearbeiten" style="cursor:pointer;border-bottom:1px dashed rgba(255,255,255,0.3);">📅 23. Juni 2026</span>
             <div class="hero-date-sep"></div>
-            <span>🕕 18:00 – 20:00 Uhr</span>
+            <span id="hero-time-text" onclick="editHeroField('time')" title="Klicken zum Bearbeiten" style="cursor:pointer;border-bottom:1px dashed rgba(255,255,255,0.3);">🕕 18:00 – 20:00 Uhr</span>
             <div class="hero-date-sep"></div>
-            <span>📍 PADELZONE Götzis</span>
+            <span id="hero-location-text" onclick="editHeroField('location')" title="Klicken zum Bearbeiten" style="cursor:pointer;border-bottom:1px dashed rgba(255,255,255,0.3);">📍 PADELZONE Götzis</span>
         </div>
     </div>
     <div class="hero-arc"></div>
 </div>
 
-<section class="story-section">
-    <div class="container">
-        <div class="story-card">
-            <div class="story-icon">🎾</div>
-            <div class="story-text">
-                <strong>Nathanael Zech</strong> verlässt Tomaselli Gabriel — und das wird gefeiert wie es sich gehört:<br>
-                mit einem exklusiven Padel-Turnier für auserwählte Kolleginnen und Kollegen.<br>
-                Zwei Courts, spannende Matches, Siegerpokal, Bier und jede Menge unvergessliche Momente.<br>
-                <strong>Willkommen beim Padel-Turnier Ausstand ZENA!</strong>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <div class="divider"></div>
 
@@ -672,7 +725,7 @@
     <div class="container">
         <div class="section-label">Schritt 3</div>
         <h2 class="section-title">Spielplan</h2>
-        <p class="tip-text">💡 Tipp: Auf einen Teamnamen klicken, um automatisch <span>6</span> als Score einzutragen — Gegner-Score noch manuell eingeben und mit ✓ oder <span>Enter</span> bestätigen.</p>
+        <p class="tip-text" id="schedule-tip">💡 Tipp: Auf einen Teamnamen klicken, um automatisch <span id="tip-score-val">6</span> als Score einzutragen — Gegner-Score noch manuell eingeben und mit ✓ oder <span>Enter</span> bestätigen.</p>
         <div id="schedule-container"></div>
     </div>
 </section>
@@ -684,9 +737,9 @@
         <div class="section-label">Regeln</div>
         <h2 class="section-title">So wird gespielt</h2>
         <div class="rules-grid">
-            <div class="rule-card"><div class="rule-icon">🏆</div><div class="rule-title">Sieg</div><div class="rule-value">+2 Punkte</div></div>
+            <div class="rule-card rule-card-clickable" onclick="openRulePopup('winpts')" title="Klicken zum Ändern"><div class="rule-icon">🏆</div><div class="rule-title">Sieg</div><div class="rule-value" id="rule-winpts">+2 Punkte</div><div class="rule-edit-hint">✏️ ändern</div></div>
             <div class="rule-card"><div class="rule-icon">❌</div><div class="rule-title">Niederlage</div><div class="rule-value">0 Punkte</div></div>
-            <div class="rule-card"><div class="rule-icon">🎯</div><div class="rule-title">Sätze pro Spiel</div><div class="rule-value">1 Satz</div></div>
+            <div class="rule-card rule-card-clickable" onclick="openRulePopup('sets')" title="Klicken zum Ändern"><div class="rule-icon">🎯</div><div class="rule-title">Sätze pro Spiel</div><div class="rule-value" id="rule-sets">1 Satz</div><div class="rule-edit-hint">✏️ ändern</div></div>
             <div class="rule-card"><div class="rule-icon">🏅</div><div class="rule-title">Games zum Sieg</div><div class="rule-value">6 Games</div></div>
         </div>
         <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:24px;">
@@ -704,10 +757,10 @@
                 <div class="score-ball">40</div><div class="score-arrow">→</div>
                 <div class="score-ball active">GAME</div>
             </div>
-            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;">
+            <p style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:12px;line-height:1.7;" id="explain-sieger">
                 <strong style="color:#fff;">Sieger:</strong> Gespielt wird bis ein Team 6 Games gewonnen hat <strong style="color:var(--green-mid);">(1 Satz)</strong>.
             </p>
-            <div class="score-seq">
+            <div class="score-seq" id="explain-satz-seq">
                 <div class="score-ball">Game1</div>
                 <div class="score-arrow">→</div>
                 <div class="score-ball">Game2</div>
@@ -736,8 +789,30 @@
 </section>
 
 <footer>
-    <p>Padel-Turnier Ausstand ZENA · <span>23. Juni 2026</span> · PADELZONE Götzis · Farewell <span>Nathanael Zech</span> 🎾</p>
+    <p>Padel-Turnier Ausstand ZENA · <span id="footer-date">23. Juni 2026</span> · <span id="footer-location">PADELZONE Götzis</span> · Farewell <span>Nathanael Zech</span> 🎾</p>
 </footer>
+
+<!-- Rule Popup -->
+<div class="rule-popup-overlay" id="rule-popup-overlay" onclick="closeRulePopup(event)">
+    <div class="rule-popup">
+        <button class="rule-popup-close" onclick="closeRulePopupDirect()">✕</button>
+        <div class="rule-popup-title" id="rule-popup-title">Auswahl</div>
+        <div id="rule-popup-options"></div>
+    </div>
+</div>
+
+<!-- Hero Edit Popup -->
+<div class="hero-edit-popup" id="hero-edit-popup" onclick="closeHeroPopup(event)">
+    <div class="hero-edit-box">
+        <button class="rule-popup-close" onclick="closeHeroPopupDirect()">✕</button>
+        <div class="hero-edit-title" id="hero-edit-title">Bearbeiten</div>
+        <input class="hero-edit-input" id="hero-edit-input" type="text" placeholder="" />
+        <div class="hero-edit-actions">
+            <button class="btn btn-outline btn-sm" onclick="closeHeroPopupDirect()">Abbrechen</button>
+            <button class="btn btn-green btn-sm" onclick="saveHeroField()">✓ Speichern</button>
+        </div>
+    </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -750,6 +825,132 @@
     let potSelection = new Set(); // names currently selected in unassigned pool
     // Team editor swap
     let swapSelection = null; // { teamIdx, playerIdx, name }
+
+    // ── RULE SETTINGS ─────────────────────────────────────────────────────────
+    let winPoints = 2;   // points awarded for a win: 1, 2, or 3
+    let setsPerGame = 1; // sets per match: 1, 2, or 3
+
+    // ── HERO FIELDS ───────────────────────────────────────────────────────────
+    let heroFields = {
+        date:     '📅 23. Juni 2026',
+        time:     '🕕 18:00 – 20:00 Uhr',
+        location: '📍 PADELZONE Götzis'
+    };
+    let currentHeroField = null;
+
+    function editHeroField(field) {
+        currentHeroField = field;
+        const titles = { date: '📅 Datum ändern', time: '🕕 Uhrzeit ändern', location: '📍 Ort ändern' };
+        document.getElementById('hero-edit-title').textContent = titles[field];
+        // strip emoji prefix for editing
+        const raw = heroFields[field].replace(/^[^\s]+\s/, '');
+        document.getElementById('hero-edit-input').value = raw;
+        document.getElementById('hero-edit-popup').classList.add('open');
+        setTimeout(() => document.getElementById('hero-edit-input').select(), 50);
+    }
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { closeHeroPopupDirect(); closeRulePopupDirect(); }
+        if (e.key === 'Enter' && document.getElementById('hero-edit-popup').classList.contains('open')) saveHeroField();
+    });
+    function saveHeroField() {
+        const val = document.getElementById('hero-edit-input').value.trim();
+        if (!val) return;
+        const emojis = { date: '📅', time: '🕕', location: '📍' };
+        heroFields[currentHeroField] = emojis[currentHeroField] + ' ' + val;
+        document.getElementById('hero-' + currentHeroField + '-text').textContent = heroFields[currentHeroField];
+        if (currentHeroField === 'date') document.getElementById('footer-date').textContent = val;
+        if (currentHeroField === 'location') document.getElementById('footer-location').textContent = val;
+        closeHeroPopupDirect();
+        showToast('Gespeichert ✓');
+    }
+    function closeHeroPopup(e) { if (e.target === document.getElementById('hero-edit-popup')) closeHeroPopupDirect(); }
+    function closeHeroPopupDirect() { document.getElementById('hero-edit-popup').classList.remove('open'); }
+
+    // ── RULE POPUP ────────────────────────────────────────────────────────────
+    let currentRuleType = null;
+    function openRulePopup(type) {
+        currentRuleType = type;
+        const overlay = document.getElementById('rule-popup-overlay');
+        const title = document.getElementById('rule-popup-title');
+        const opts = document.getElementById('rule-popup-options');
+        if (type === 'winpts') {
+            title.textContent = '🏆 Punkte pro Sieg';
+            opts.innerHTML = [
+                { val: 1, label: '1 Punkt', desc: 'Minimale Wertung' },
+                { val: 2, label: '2 Punkte', desc: 'Standard-Modus' },
+                { val: 3, label: '3 Punkte', desc: 'Mehr Abstand in der Tabelle' }
+            ].map(o => `<button class="rule-option-btn ${winPoints===o.val?'selected':''}" onclick="selectWinPoints(${o.val})">
+                ${o.label}<span class="opt-label">${o.desc}</span>
+            </button>`).join('');
+        } else if (type === 'sets') {
+            title.textContent = '🎯 Sätze pro Spiel';
+            opts.innerHTML = [
+                { val: 1, label: '1 Satz', desc: 'Kurze Matches – mehr Durchsatz' },
+                { val: 2, label: '2 Sätze', desc: 'Best-of-2, bei 1:1 → Tiebreak' },
+                { val: 3, label: '3 Sätze', desc: 'Best-of-3 – klassisch' }
+            ].map(o => `<button class="rule-option-btn ${setsPerGame===o.val?'selected':''}" onclick="selectSets(${o.val})">
+                ${o.label}<span class="opt-label">${o.desc}</span>
+            </button>`).join('');
+        }
+        overlay.classList.add('open');
+    }
+    function selectWinPoints(val) {
+        winPoints = val;
+        document.getElementById('rule-winpts').textContent = '+' + val + ' Punkt' + (val === 1 ? '' : 'e');
+        closeRulePopupDirect();
+        updateExplanation();
+        // recalculate existing results
+        renderAll();
+        showToast('Siegpunkte auf ' + val + ' geändert ✓');
+    }
+    function selectSets(val) {
+        setsPerGame = val;
+        const label = val === 1 ? '1 Satz' : val + ' Sätze';
+        document.getElementById('rule-sets').textContent = label;
+        closeRulePopupDirect();
+        updateExplanation();
+        showToast('Sätze pro Spiel auf ' + label + ' geändert ✓');
+    }
+    function closeRulePopup(e) { if (e.target === document.getElementById('rule-popup-overlay')) closeRulePopupDirect(); }
+    function closeRulePopupDirect() { document.getElementById('rule-popup-overlay').classList.remove('open'); }
+
+    function updateExplanation() {
+        // Update "Sieger" explanation text
+        const siegerEl = document.getElementById('explain-sieger');
+        if (setsPerGame === 1) {
+            siegerEl.innerHTML = '<strong style="color:#fff;">Sieger:</strong> Gespielt wird bis ein Team 6 Games gewonnen hat <strong style="color:var(--green-mid);">(1 Satz)</strong>.';
+        } else if (setsPerGame === 2) {
+            siegerEl.innerHTML = '<strong style="color:#fff;">Sieger:</strong> Gespielt wird <strong style="color:var(--green-mid);">Best-of-2</strong> — wer 2 Sätze gewinnt, siegt. Bei 1:1 entscheidet ein <strong style="color:var(--green-mid);">Match-Tiebreak</strong>.';
+        } else {
+            siegerEl.innerHTML = '<strong style="color:#fff;">Sieger:</strong> Gespielt wird <strong style="color:var(--green-mid);">Best-of-3</strong> — wer zuerst 2 Sätze gewinnt, siegt.';
+        }
+        // Update satz sequence diagram
+        const seqEl = document.getElementById('explain-satz-seq');
+        if (setsPerGame === 1) {
+            seqEl.innerHTML = `<div class="score-ball">Game1</div><div class="score-arrow">→</div>
+                <div class="score-ball">Game2</div><div class="score-arrow">→</div>
+                <div class="score-ball">Game3</div><div class="score-arrow">→</div>
+                <div class="score-ball">Game4</div><div class="score-arrow">→</div>
+                <div class="score-ball">Game5</div><div class="score-arrow">→</div>
+                <div class="score-ball active">Satz</div>
+                <div class="score-arrow">=</div>
+                <div class="score-ball win">Sieger</div>`;
+        } else if (setsPerGame === 2) {
+            seqEl.innerHTML = `<div class="score-ball">Satz 1</div><div class="score-arrow">+</div>
+                <div class="score-ball">Satz 2</div><div class="score-arrow">→</div>
+                <div class="score-ball active">2:0</div><div class="score-arrow">=</div>
+                <div class="score-ball win">Sieger</div>
+                <div class="score-arrow">|</div>
+                <div class="score-ball active">1:1</div><div class="score-arrow">→</div>
+                <div class="score-ball win">Tiebreak</div>`;
+        } else {
+            seqEl.innerHTML = `<div class="score-ball">Satz 1</div><div class="score-arrow">+</div>
+                <div class="score-ball">Satz 2</div><div class="score-arrow">+</div>
+                <div class="score-ball">Satz 3</div><div class="score-arrow">→</div>
+                <div class="score-ball active">2 Sätze</div><div class="score-arrow">=</div>
+                <div class="score-ball win">Sieger</div>`;
+        }
+    }
 
     const teamColors = ['🟢','🔵','🟡','🟠','🔴','🟣'];
     const STORAGE_KEY = 'padel_zena_state_v2';
@@ -1163,8 +1364,8 @@
             table[m.team1].played++; table[m.team2].played++;
             table[m.team1].gFor += r.score1; table[m.team1].gAgainst += r.score2;
             table[m.team2].gFor += r.score2; table[m.team2].gAgainst += r.score1;
-            if (r.winner===m.team1) { table[m.team1].won++; table[m.team1].pts+=2; table[m.team2].lost++; }
-            else { table[m.team2].won++; table[m.team2].pts+=2; table[m.team1].lost++; }
+            if (r.winner===m.team1) { table[m.team1].won++; table[m.team1].pts+=winPoints; table[m.team2].lost++; }
+            else { table[m.team2].won++; table[m.team2].pts+=winPoints; table[m.team1].lost++; }
         });
         return table.sort((a,b) => b.pts-a.pts || (b.gFor-b.gAgainst)-(a.gFor-a.gAgainst) || b.gFor-a.gFor);
     }
@@ -1212,16 +1413,19 @@
         const canPlay=m.team1!==null&&m.team2!==null;
         let html=`<div class="match-card ${extraClass||''}" id="mc_${m.id}">`;
         if (m.ko&&m.label) html+=`<div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;">${m.label}</div>`;
+        const maxSc = getMaxScore();
+        const tipLabel = setsPerGame === 1 ? 'klicken → '+maxSc : 'klicken → '+maxSc+' Sätze';
         html+=`<div class="match-teams">
-            <div class="match-team ${w1?'is-winner':''}" onclick="prefillScore('${m.id}',1)">${getTeamName(m.team1)}<span class="match-team-hint">klicken → 6</span></div>
+            <div class="match-team ${w1?'is-winner':''}" onclick="prefillScore('${m.id}',1)">${getTeamName(m.team1)}<span class="match-team-hint">${tipLabel}</span></div>
             <div class="match-vs">vs</div>
-            <div class="match-team ${w2?'is-winner':''}" onclick="prefillScore('${m.id}',2)">${getTeamName(m.team2)}<span class="match-team-hint">klicken → 6</span></div>
+            <div class="match-team ${w2?'is-winner':''}" onclick="prefillScore('${m.id}',2)">${getTeamName(m.team2)}<span class="match-team-hint">${tipLabel}</span></div>
         </div>`;
         if (canPlay) {
+            const scoreLabel = setsPerGame === 1 ? 'Games' : 'Sätze';
             html+=`<div class="match-result">
-                <input class="score-input" type="number" min="0" max="6" value="${r?r.score1:''}" placeholder="–" id="s1_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})">
+                <input class="score-input" type="number" min="0" max="${maxSc}" value="${r?r.score1:''}" placeholder="–" id="s1_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})" title="${scoreLabel} Team 1">
                 <div class="score-sep">:</div>
-                <input class="score-input" type="number" min="0" max="6" value="${r?r.score2:''}" placeholder="–" id="s2_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})">
+                <input class="score-input" type="number" min="0" max="${maxSc}" value="${r?r.score2:''}" placeholder="–" id="s2_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})" title="${scoreLabel} Team 2">
                 <button class="btn btn-green save-match-btn" onclick="saveScore('${m.id}',${m.team1},${m.team2})">✓</button>
             </div>`;
             if (r) html+=`<div class="match-winner-badge">🏆 ${getTeamName(winner)}</div>`;
@@ -1263,23 +1467,36 @@
         else phaseText.textContent='Gruppenphase läuft';
     }
 
+    function getMaxScore() {
+        // For 1 set: games 0–6; for 2 sets: sets 0–2; for 3 sets: sets 0–3
+        return setsPerGame === 1 ? 6 : setsPerGame;
+    }
+    function getPrefillWinScore() { return getMaxScore(); }
+
     function prefillScore(matchId, side) {
         const s1=document.getElementById('s1_'+matchId), s2=document.getElementById('s2_'+matchId);
         if (!s1||!s2) return;
-        if (side===1) { s1.value=6; s2.value=''; s2.focus(); }
-        else { s2.value=6; s1.value=''; s1.focus(); }
+        const win = getPrefillWinScore();
+        if (side===1) { s1.value=win; s2.value=''; s2.focus(); }
+        else { s2.value=win; s1.value=''; s1.focus(); }
     }
     function handleScoreKey(e, matchId, t1, t2) { if (e.key==='Enter') saveScore(matchId,t1,t2); }
     function saveScore(matchId, t1, t2) {
         const s1r=document.getElementById('s1_'+matchId)?.value, s2r=document.getElementById('s2_'+matchId)?.value;
         const s1=s1r===''?NaN:parseInt(s1r), s2=s2r===''?NaN:parseInt(s2r);
+        const maxScore = getMaxScore();
         if (isNaN(s1)||isNaN(s2)) { showToast('Bitte beide Scores eingeben!'); return; }
-        if (s1<0||s2<0||s1>6||s2>6) { showToast('Score muss zwischen 0 und 6 liegen!'); return; }
+        if (s1<0||s2<0||s1>maxScore||s2>maxScore) { showToast('Score muss zwischen 0 und '+maxScore+' liegen!'); return; }
         if (s1===s2) { showToast('Kein Unentschieden möglich!'); return; }
         results[matchId]={score1:s1,score2:s2,winner:s1>s2?t1:t2};
         renderAll(); saveState(); showToast('Ergebnis gespeichert! ✓');
     }
-    function renderAll() { renderStandings(); renderSchedule(); }
+    function renderAll() {
+        renderStandings(); renderSchedule();
+        // update tip text
+        const tipEl = document.getElementById('tip-score-val');
+        if (tipEl) tipEl.textContent = getMaxScore();
+    }
 
     // ── RESET ─────────────────────────────────────────────────────────────────
     function resetAll() {
