@@ -424,18 +424,27 @@
         .ko-finale { background: #2a1a0a; color: var(--gold); }
         .ko-section { margin-top: 40px; }
 
-        /* ── SET ROWS (best-of scoring) ── */
-        .sets-container { display: flex; flex-direction: column; gap: 6px; }
-        .set-row { display: flex; align-items: center; gap: 10px; }
-        .set-row .match-result { justify-content: flex-start; margin-top: 0; }
-        .set-label {
-            font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-            color: rgba(255,255,255,0.35); width: 52px; flex-shrink: 0;
+        /* ── SET ROWS (Best-of Sätze) ── */
+        .sets-list { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 4px; }
+        .set-row { display: flex; align-items: center; gap: 8px; justify-content: center; width: 100%; }
+        .set-row-label {
+            font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35);
+            letter-spacing: 1px; text-transform: uppercase; width: 52px; flex-shrink: 0;
         }
-        .sets-score-summary {
-            font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.4);
-            margin-top: 8px; text-align: center;
+        .set-row-done {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px; padding: 6px 10px;
         }
+        .set-row-score {
+            font-family: 'Bebas Neue', sans-serif; font-size: 18px; font-weight: 700;
+            color: rgba(255,255,255,0.55); min-width: 22px; text-align: center;
+        }
+        .set-row-score.set-win { color: var(--green-mid); }
+        .set-row-remove {
+            background: none; border: none; color: rgba(255,255,255,0.2); cursor: pointer;
+            font-size: 13px; margin-left: auto; padding: 0; transition: color 0.15s;
+        }
+        .set-row-remove:hover { color: #e74c3c; }
 
         /* ── RULES SECTION ── */
         .rules-section { background: #0d0d0d; }
@@ -842,6 +851,8 @@
     let potSelection = new Set(); // names currently selected in unassigned pool
     // Team editor swap
     let swapSelection = null; // { teamIdx, playerIdx, name }
+    // In-progress (not yet decided) best-of-N sets per match, keyed by matchId
+    let liveSets = {};
 
     // ── RULE SETTINGS ─────────────────────────────────────────────────────────
     let winPoints = 2;      // points awarded for a win: 1, 2, or 3
@@ -920,6 +931,7 @@
         updateExplanation();
         // recalculate existing results
         renderAll();
+        saveState();
         showToast('Siegpunkte auf ' + val + ' geändert ✓');
     }
     function selectSets(val) {
@@ -930,6 +942,7 @@
         closeRulePopupDirect();
         updateExplanation();
         renderAll();
+        saveState();
         showToast('Sätze pro Spiel auf ' + label + ' geändert ✓');
     }
     function closeRulePopup(e) { if (e.target === document.getElementById('rule-popup-overlay')) closeRulePopupDirect(); }
@@ -942,7 +955,7 @@
         if (bestOfSets === 1) {
             siegerEl.innerHTML = '<strong style="color:#fff;">Sieger:</strong> Gespielt wird bis ein Team 6 Games gewonnen hat <strong style="color:var(--green-mid);">(1 Satz)</strong>.';
         } else {
-            siegerEl.innerHTML = `<strong style="color:#fff;">Sieger:</strong> Gespielt wird <strong style="color:var(--green-mid);">Best of ${bestOfSets}</strong> — wer zuerst <strong style="color:var(--green-mid);">${need} Sätze</strong> gewinnt, siegt das Match.`;
+            siegerEl.innerHTML = `<strong style="color:#fff;">Sieger:</strong> Gespielt wird <strong style="color:var(--green-mid);">Best of ${bestOfSets}</strong> — wer zuerst <strong style="color:var(--green-mid);">${need} Sätze</strong> (je bis 6 Games) gewinnt, siegt das Match. Sobald ein Team die nötigen Sätze hat, entfallen die restlichen.`;
         }
         // Update satz sequence diagram
         const seqEl = document.getElementById('explain-satz-seq');
@@ -972,7 +985,7 @@
 
     // ── PERSISTENCE ───────────────────────────────────────────────────────────
     function saveState() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ players, teams, matches, results, tournamentStarted, drawMode, pot1, pot2 })); } catch(e) {}
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ players, teams, matches, results, tournamentStarted, drawMode, pot1, pot2, winPoints, bestOfSets, liveSets })); } catch(e) {}
     }
     function loadState() {
         try {
@@ -982,11 +995,16 @@
             players = s.players || []; teams = s.teams || []; matches = s.matches || [];
             results = s.results || {}; tournamentStarted = s.tournamentStarted || false;
             drawMode = s.drawMode || 'random'; pot1 = s.pot1 || []; pot2 = s.pot2 || [];
+            winPoints = s.winPoints || 2; bestOfSets = s.bestOfSets || 1; liveSets = s.liveSets || {};
             potSelection = new Set();
             return true;
         } catch(e) { return false; }
     }
     function restoreUI() {
+        document.getElementById('rule-winpts').textContent = '+' + winPoints + ' Punkt' + (winPoints === 1 ? '' : 'e');
+        const labels = { 1: '1 Satz', 3: 'Best of 3', 5: 'Best of 5', 7: 'Best of 7' };
+        document.getElementById('rule-sets').textContent = labels[bestOfSets] || '1 Satz';
+        updateExplanation();
         setMode(drawMode, true);
         renderPlayers();
         renderPotsUI();
@@ -1361,7 +1379,7 @@
 
     function startTournament() {
         if (teams.length < 4) { showToast('Mindestens 4 Teams nötig!'); return; }
-        tournamentStarted = true; matches = []; results = {};
+        tournamentStarted = true; matches = []; results = {}; liveSets = {};
         generateRoundRobin(); renderAll();
         document.getElementById('div-schedule').style.display = '';
         document.getElementById('div-schedule2').style.display = '';
@@ -1421,6 +1439,90 @@
         return teams[idx]?teams[idx].color+' '+teams[idx].name:'?';
     }
 
+    // ── MATCH STATE (for best-of-N set entry) ───────────────────────────────────
+    function getMatchState(matchId) {
+        if (results[matchId] && results[matchId].sets) {
+            const r = results[matchId];
+            return { sets: r.sets, setsWon1: r.setsWon1, setsWon2: r.setsWon2, decided: true };
+        }
+        const sets = liveSets[matchId] || [];
+        let w1 = 0, w2 = 0;
+        sets.forEach(s => { if (s.score1 > s.score2) w1++; else w2++; });
+        return { sets, setsWon1: w1, setsWon2: w2, decided: false };
+    }
+
+    function renderSetRows(m) {
+        const state = getMatchState(m.id);
+        let html = '<div class="sets-list">';
+        state.sets.forEach((s, idx) => {
+            const w1 = s.score1 > s.score2;
+            html += `<div class="set-row set-row-done">
+                <span class="set-row-label">Satz ${idx+1}</span>
+                <span class="set-row-score ${w1?'set-win':''}">${s.score1}</span>
+                <span class="score-sep">:</span>
+                <span class="set-row-score ${!w1?'set-win':''}">${s.score2}</span>
+                <button class="set-row-remove" onclick="removeSet('${m.id}',${idx})" title="Satz entfernen">✕</button>
+            </div>`;
+        });
+        if (!state.decided && state.sets.length < bestOfSets) {
+            const idx = state.sets.length;
+            html += `<div class="set-row set-row-active">
+                <span class="set-row-label">Satz ${idx+1}</span>
+                <input class="score-input" type="number" min="0" max="6" id="s1_${m.id}_${idx}" placeholder="–" onkeydown="handleSetKey(event,'${m.id}',${m.team1},${m.team2})" title="Games Team 1">
+                <div class="score-sep">:</div>
+                <input class="score-input" type="number" min="0" max="6" id="s2_${m.id}_${idx}" placeholder="–" onkeydown="handleSetKey(event,'${m.id}',${m.team1},${m.team2})" title="Games Team 2">
+                <button class="btn btn-green save-match-btn" onclick="saveSet('${m.id}',${m.team1},${m.team2})">✓</button>
+            </div>`;
+        }
+        html += '</div>';
+        return html;
+    }
+
+    function saveSet(matchId, t1, t2) {
+        const state = getMatchState(matchId);
+        if (state.decided) return;
+        const idx = state.sets.length;
+        const s1r = document.getElementById('s1_'+matchId+'_'+idx)?.value;
+        const s2r = document.getElementById('s2_'+matchId+'_'+idx)?.value;
+        const s1 = (s1r===''||s1r===undefined) ? NaN : parseInt(s1r);
+        const s2 = (s2r===''||s2r===undefined) ? NaN : parseInt(s2r);
+        if (isNaN(s1)||isNaN(s2)) { showToast('Bitte beide Games eingeben!'); return; }
+        if (s1<0||s2<0||s1>6||s2>6) { showToast('Games müssen zwischen 0 und 6 liegen!'); return; }
+        if (s1===s2) { showToast('Kein Unentschieden in einem Satz möglich!'); return; }
+
+        if (!liveSets[matchId]) liveSets[matchId] = [];
+        liveSets[matchId].push({ score1: s1, score2: s2 });
+
+        let w1 = 0, w2 = 0, g1 = 0, g2 = 0;
+        liveSets[matchId].forEach(s => { g1 += s.score1; g2 += s.score2; if (s.score1 > s.score2) w1++; else w2++; });
+        const need = setsToWin();
+        if (w1 >= need || w2 >= need) {
+            results[matchId] = { sets: liveSets[matchId], score1: g1, score2: g2, winner: w1>=need?t1:t2, setsWon1: w1, setsWon2: w2 };
+            delete liveSets[matchId];
+            showToast('Match beendet! ✓');
+        } else {
+            showToast('Satz gespeichert ✓');
+        }
+        renderAll(); saveState();
+    }
+
+    function removeSet(matchId, idx) {
+        let sets;
+        if (results[matchId] && results[matchId].sets) {
+            sets = results[matchId].sets.slice();
+            delete results[matchId];
+        } else {
+            sets = (liveSets[matchId] || []).slice();
+        }
+        sets = sets.slice(0, idx); // remove this set and any that came after it
+        if (sets.length > 0) liveSets[matchId] = sets;
+        else delete liveSets[matchId];
+        renderAll(); saveState();
+        showToast('Satz entfernt');
+    }
+
+    function handleSetKey(e, matchId, t1, t2) { if (e.key === 'Enter') saveSet(matchId, t1, t2); }
+
     // ── MATCH CARDS ───────────────────────────────────────────────────────────
     function renderMatchCard(m, extraClass) {
         const r=results[m.id], winner=r?r.winner:null;
@@ -1429,21 +1531,28 @@
         let html=`<div class="match-card ${extraClass||''}" id="mc_${m.id}">`;
         if (m.ko&&m.label) html+=`<div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;">${m.label}</div>`;
         const maxSc = getMaxScore();
-        const tipLabel = bestOfSets === 1 ? 'klicken → '+maxSc : 'klicken → '+maxSc+' Sätze';
+        const tipLabel = bestOfSets === 1 ? 'klicken → '+maxSc : 'klicken → 6 (aktueller Satz)';
         html+=`<div class="match-teams">
             <div class="match-team ${w1?'is-winner':''}" onclick="prefillScore('${m.id}',1)">${getTeamName(m.team1)}<span class="match-team-hint">${tipLabel}</span></div>
             <div class="match-vs">vs</div>
             <div class="match-team ${w2?'is-winner':''}" onclick="prefillScore('${m.id}',2)">${getTeamName(m.team2)}<span class="match-team-hint">${tipLabel}</span></div>
         </div>`;
         if (canPlay) {
-            const scoreLabel = bestOfSets === 1 ? 'Games' : 'Sätze';
-            html+=`<div class="match-result">
-                <input class="score-input" type="number" min="0" max="${maxSc}" value="${r?r.score1:''}" placeholder="–" id="s1_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})" title="${scoreLabel} Team 1">
-                <div class="score-sep">:</div>
-                <input class="score-input" type="number" min="0" max="${maxSc}" value="${r?r.score2:''}" placeholder="–" id="s2_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})" title="${scoreLabel} Team 2">
-                <button class="btn btn-green save-match-btn" onclick="saveScore('${m.id}',${m.team1},${m.team2})">✓</button>
-            </div>`;
-            if (r) html+=`<div class="match-winner-badge">🏆 ${getTeamName(winner)}</div>`;
+            if (bestOfSets === 1) {
+                html+=`<div class="match-result">
+                    <input class="score-input" type="number" min="0" max="${maxSc}" value="${r?r.score1:''}" placeholder="–" id="s1_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})" title="Games Team 1">
+                    <div class="score-sep">:</div>
+                    <input class="score-input" type="number" min="0" max="${maxSc}" value="${r?r.score2:''}" placeholder="–" id="s2_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})" title="Games Team 2">
+                    <button class="btn btn-green save-match-btn" onclick="saveScore('${m.id}',${m.team1},${m.team2})">✓</button>
+                </div>`;
+                if (r) html+=`<div class="match-winner-badge">🏆 ${getTeamName(winner)}</div>`;
+            } else {
+                html += renderSetRows(m);
+                if (r) {
+                    const setsStr = r.sets.map(s => s.score1+':'+s.score2).join(', ');
+                    html += `<div class="match-winner-badge">🏆 ${getTeamName(winner)} <span style="opacity:0.75;font-weight:500;">(${r.setsWon1}:${r.setsWon2} Sätze · ${setsStr})</span></div>`;
+                }
+            }
         } else {
             html+=`<div style="font-size:13px;color:rgba(255,255,255,0.3);font-style:italic;margin-top:4px;">Wird nach Gruppenphase besetzt</div>`;
         }
@@ -1489,11 +1598,21 @@
     function getPrefillWinScore() { return getMaxScore(); }
 
     function prefillScore(matchId, side) {
-        const s1=document.getElementById('s1_'+matchId), s2=document.getElementById('s2_'+matchId);
+        if (bestOfSets === 1) {
+            const s1=document.getElementById('s1_'+matchId), s2=document.getElementById('s2_'+matchId);
+            if (!s1||!s2) return;
+            const win = getPrefillWinScore();
+            if (side===1) { s1.value=win; s2.value=''; s2.focus(); }
+            else { s2.value=win; s1.value=''; s1.focus(); }
+            return;
+        }
+        const state = getMatchState(matchId);
+        if (state.decided) return;
+        const idx = state.sets.length;
+        const s1=document.getElementById('s1_'+matchId+'_'+idx), s2=document.getElementById('s2_'+matchId+'_'+idx);
         if (!s1||!s2) return;
-        const win = getPrefillWinScore();
-        if (side===1) { s1.value=win; s2.value=''; s2.focus(); }
-        else { s2.value=win; s1.value=''; s1.focus(); }
+        if (side===1) { s1.value=6; s2.value=''; s2.focus(); }
+        else { s2.value=6; s1.value=''; s1.focus(); }
     }
     function handleScoreKey(e, matchId, t1, t2) { if (e.key==='Enter') saveScore(matchId,t1,t2); }
     function saveScore(matchId, t1, t2) {
@@ -1509,15 +1628,21 @@
     function renderAll() {
         renderStandings(); renderSchedule();
         // update tip text
-        const tipEl = document.getElementById('tip-score-val');
-        if (tipEl) tipEl.textContent = getMaxScore();
+        const tipEl = document.getElementById('schedule-tip');
+        if (tipEl) {
+            if (bestOfSets === 1) {
+                tipEl.innerHTML = '💡 Tipp: Auf einen Teamnamen klicken, um automatisch ' + getMaxScore() + ' als Score einzutragen — Gegner-Score noch manuell eingeben und mit ✓ oder <span>Enter</span> bestätigen.';
+            } else {
+                tipEl.innerHTML = '💡 Tipp: Auf einen Teamnamen klicken, um automatisch 6 Games für den aktuellen Satz einzutragen. Jeder Satz wird einzeln mit ✓ oder <span>Enter</span> gespeichert — das Match endet automatisch, sobald ein Team ' + setsToWin() + ' Sätze gewonnen hat.';
+            }
+        }
     }
 
     // ── RESET ─────────────────────────────────────────────────────────────────
     function resetAll() {
         if (tournamentStarted&&!confirm('Wirklich alles zurücksetzen?')) return;
         players=[]; teams=[]; matches=[]; results={}; tournamentStarted=false; pot1=[]; pot2=[];
-        potSelection=new Set(); swapSelection=null;
+        potSelection=new Set(); swapSelection=null; liveSets={};
         try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
         renderPlayers(); renderPotsUI();
         document.getElementById('section-teams').classList.add('hidden');
