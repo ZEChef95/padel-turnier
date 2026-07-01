@@ -214,6 +214,9 @@
             user-select: none;
         }
         .unassigned-chip:hover { border-color: rgba(255,255,255,0.3); color: #fff; background: rgba(255,255,255,0.07); }
+        .unassigned-chip.selected {
+            background: rgba(46,201,122,0.15); border-color: var(--green-mid); color: var(--green-mid);
+        }
 
         .pot-action-btn {
             padding: 6px 14px; border-radius: 7px; font-size: 12px; font-weight: 600;
@@ -234,6 +237,7 @@
             background: rgba(46,201,122,0.06); border: 1px solid rgba(46,201,122,0.15);
             border-radius: 10px; padding: 12px 16px; margin-bottom: 12px;
         }
+        .bulk-actions.show { display: flex; }
 
         .bulk-actions-label { font-size: 13px; color: var(--green-mid); font-weight: 600; flex-shrink: 0; }
         .bulk-clear-btn {
@@ -419,6 +423,19 @@
         .ko-halbfinale { background: #1a2a4a; color: #6ea8fe; }
         .ko-finale { background: #2a1a0a; color: var(--gold); }
         .ko-section { margin-top: 40px; }
+
+        /* ── SET ROWS (best-of scoring) ── */
+        .sets-container { display: flex; flex-direction: column; gap: 6px; }
+        .set-row { display: flex; align-items: center; gap: 10px; }
+        .set-row .match-result { justify-content: flex-start; margin-top: 0; }
+        .set-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: rgba(255,255,255,0.35); width: 52px; flex-shrink: 0;
+        }
+        .sets-score-summary {
+            font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.4);
+            margin-top: 8px; text-align: center;
+        }
 
         /* ── RULES SECTION ── */
         .rules-section { background: #0d0d0d; }
@@ -827,8 +844,9 @@
     let swapSelection = null; // { teamIdx, playerIdx, name }
 
     // ── RULE SETTINGS ─────────────────────────────────────────────────────────
-    let winPoints = 2;   // points awarded for a win: 1, 2, or 3
-    let setsPerGame = 1; // sets per match: 1, 2, or 3
+    let winPoints = 2;      // points awarded for a win: 1, 2, or 3
+    let bestOfSets = 1;     // best-of format: 1, 3, 5, or 7
+    function setsToWin() { return Math.ceil(bestOfSets / 2); }
 
     // ── HERO FIELDS ───────────────────────────────────────────────────────────
     let heroFields = {
@@ -886,9 +904,10 @@
             title.textContent = '🎯 Sätze pro Spiel';
             opts.innerHTML = [
                 { val: 1, label: '1 Satz', desc: 'Kurze Matches – mehr Durchsatz' },
-                { val: 2, label: '2 Sätze', desc: 'Best-of-2, bei 1:1 → Tiebreak' },
-                { val: 3, label: '3 Sätze', desc: 'Best-of-3 – klassisch' }
-            ].map(o => `<button class="rule-option-btn ${setsPerGame===o.val?'selected':''}" onclick="selectSets(${o.val})">
+                { val: 3, label: 'Best of 3', desc: 'Wer zuerst 2 Sätze gewinnt' },
+                { val: 5, label: 'Best of 5', desc: 'Wer zuerst 3 Sätze gewinnt' },
+                { val: 7, label: 'Best of 7', desc: 'Wer zuerst 4 Sätze gewinnt' }
+            ].map(o => `<button class="rule-option-btn ${bestOfSets===o.val?'selected':''}" onclick="selectSets(${o.val})">
                 ${o.label}<span class="opt-label">${o.desc}</span>
             </button>`).join('');
         }
@@ -904,11 +923,13 @@
         showToast('Siegpunkte auf ' + val + ' geändert ✓');
     }
     function selectSets(val) {
-        setsPerGame = val;
-        const label = val === 1 ? '1 Satz' : val + ' Sätze';
+        bestOfSets = val;
+        const labels = { 1: '1 Satz', 3: 'Best of 3', 5: 'Best of 5', 7: 'Best of 7' };
+        const label = labels[val];
         document.getElementById('rule-sets').textContent = label;
         closeRulePopupDirect();
         updateExplanation();
+        renderAll();
         showToast('Sätze pro Spiel auf ' + label + ' geändert ✓');
     }
     function closeRulePopup(e) { if (e.target === document.getElementById('rule-popup-overlay')) closeRulePopupDirect(); }
@@ -917,16 +938,15 @@
     function updateExplanation() {
         // Update "Sieger" explanation text
         const siegerEl = document.getElementById('explain-sieger');
-        if (setsPerGame === 1) {
+        const need = setsToWin();
+        if (bestOfSets === 1) {
             siegerEl.innerHTML = '<strong style="color:#fff;">Sieger:</strong> Gespielt wird bis ein Team 6 Games gewonnen hat <strong style="color:var(--green-mid);">(1 Satz)</strong>.';
-        } else if (setsPerGame === 2) {
-            siegerEl.innerHTML = '<strong style="color:#fff;">Sieger:</strong> Gespielt wird <strong style="color:var(--green-mid);">Best-of-2</strong> — wer 2 Sätze gewinnt, siegt. Bei 1:1 entscheidet ein <strong style="color:var(--green-mid);">Match-Tiebreak</strong>.';
         } else {
-            siegerEl.innerHTML = '<strong style="color:#fff;">Sieger:</strong> Gespielt wird <strong style="color:var(--green-mid);">Best-of-3</strong> — wer zuerst 2 Sätze gewinnt, siegt.';
+            siegerEl.innerHTML = `<strong style="color:#fff;">Sieger:</strong> Gespielt wird <strong style="color:var(--green-mid);">Best of ${bestOfSets}</strong> — wer zuerst <strong style="color:var(--green-mid);">${need} Sätze</strong> gewinnt, siegt das Match.`;
         }
         // Update satz sequence diagram
         const seqEl = document.getElementById('explain-satz-seq');
-        if (setsPerGame === 1) {
+        if (bestOfSets === 1) {
             seqEl.innerHTML = `<div class="score-ball">Game1</div><div class="score-arrow">→</div>
                 <div class="score-ball">Game2</div><div class="score-arrow">→</div>
                 <div class="score-ball">Game3</div><div class="score-arrow">→</div>
@@ -935,19 +955,14 @@
                 <div class="score-ball active">Satz</div>
                 <div class="score-arrow">=</div>
                 <div class="score-ball win">Sieger</div>`;
-        } else if (setsPerGame === 2) {
-            seqEl.innerHTML = `<div class="score-ball">Satz 1</div><div class="score-arrow">+</div>
-                <div class="score-ball">Satz 2</div><div class="score-arrow">→</div>
-                <div class="score-ball active">2:0</div><div class="score-arrow">=</div>
-                <div class="score-ball win">Sieger</div>
-                <div class="score-arrow">|</div>
-                <div class="score-ball active">1:1</div><div class="score-arrow">→</div>
-                <div class="score-ball win">Tiebreak</div>`;
         } else {
-            seqEl.innerHTML = `<div class="score-ball">Satz 1</div><div class="score-arrow">+</div>
-                <div class="score-ball">Satz 2</div><div class="score-arrow">+</div>
-                <div class="score-ball">Satz 3</div><div class="score-arrow">→</div>
-                <div class="score-ball active">2 Sätze</div><div class="score-arrow">=</div>
+            let balls = '';
+            for (let i = 1; i <= bestOfSets; i++) {
+                balls += `<div class="score-ball">Satz ${i}</div>`;
+                if (i < bestOfSets) balls += `<div class="score-arrow">+</div>`;
+            }
+            seqEl.innerHTML = `${balls}<div class="score-arrow">→</div>
+                <div class="score-ball active">${need}:0</div><div class="score-arrow">=</div>
                 <div class="score-ball win">Sieger</div>`;
         }
     }
@@ -1414,14 +1429,14 @@
         let html=`<div class="match-card ${extraClass||''}" id="mc_${m.id}">`;
         if (m.ko&&m.label) html+=`<div style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;">${m.label}</div>`;
         const maxSc = getMaxScore();
-        const tipLabel = setsPerGame === 1 ? 'klicken → '+maxSc : 'klicken → '+maxSc+' Sätze';
+        const tipLabel = bestOfSets === 1 ? 'klicken → '+maxSc : 'klicken → '+maxSc+' Sätze';
         html+=`<div class="match-teams">
             <div class="match-team ${w1?'is-winner':''}" onclick="prefillScore('${m.id}',1)">${getTeamName(m.team1)}<span class="match-team-hint">${tipLabel}</span></div>
             <div class="match-vs">vs</div>
             <div class="match-team ${w2?'is-winner':''}" onclick="prefillScore('${m.id}',2)">${getTeamName(m.team2)}<span class="match-team-hint">${tipLabel}</span></div>
         </div>`;
         if (canPlay) {
-            const scoreLabel = setsPerGame === 1 ? 'Games' : 'Sätze';
+            const scoreLabel = bestOfSets === 1 ? 'Games' : 'Sätze';
             html+=`<div class="match-result">
                 <input class="score-input" type="number" min="0" max="${maxSc}" value="${r?r.score1:''}" placeholder="–" id="s1_${m.id}" onkeydown="handleScoreKey(event,'${m.id}',${m.team1},${m.team2})" title="${scoreLabel} Team 1">
                 <div class="score-sep">:</div>
@@ -1468,8 +1483,8 @@
     }
 
     function getMaxScore() {
-        // For 1 set: games 0–6; for 2 sets: sets 0–2; for 3 sets: sets 0–3
-        return setsPerGame === 1 ? 6 : setsPerGame;
+        // For 1 set (single set): games 0–6; for best-of-3/5/7: sets needed to win the match
+        return bestOfSets === 1 ? 6 : setsToWin();
     }
     function getPrefillWinScore() { return getMaxScore(); }
 
